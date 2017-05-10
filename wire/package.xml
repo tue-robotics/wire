@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package>
+  <name>wm</name>
+  <version>0.0.0</version>
+  <description>The wm package</description>
+
+  <maintainer email="jos.elfring@tno.nl">Rein Appeldoorn</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Wrapper around matrix library -->
+  <run_depend>armadillo_matrix</run_depend>
+
+  <!-- Library for probabilistic data and computations -->
+  <run_depend>problib</run_depend>
+
+  <!-- Wire core -->
+  <run_depend>wire_core</run_depend>
+
+  <!-- World messages for interacting with the world model -->
+  <run_depend>wire_msgs</run_depend>
+  
+  <!-- Wire state estimators -->
+  <run_depend>wire_state_estimators</run_depend>
+  
+  <!-- Wire visualization -->
+  <run_depend>wire_viz</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+
+</package>
+
