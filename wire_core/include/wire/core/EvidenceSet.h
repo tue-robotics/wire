@@ -1,0 +1,107 @@
+/************************************************************************
+ *  Copyright (C) 2012 Eindhoven University of Technology (TU/e).       *
+ *  All rights reserved.                                                *
+ ************************************************************************
+ *  Redistribution and use in source and binary forms, with or without  *
+ *  modification, are permitted provided that the following conditions  *
+ *  are met:                                                            *
+ *                                                                      *
+ *      1.  Redistributions of source code must retain the above        *
+ *          copyright notice, this list of conditions and the following *
+ *          disclaimer.                                                 *
+ *                                                                      *
+ *      2.  Redistributions in binary form must reproduce the above     *
+ *          copyright notice, this list of conditions and the following *
+ *          disclaimer in the documentation and/or other materials      *
+ *          provided with the distribution.                             *
+ *                                                                      *
+ *  THIS SOFTWARE IS PROVIDED BY TU/e "AS IS" AND ANY EXPRESS OR        *
+ *  IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED      *
+ *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  *
+ *  ARE DISCLAIMED. IN NO EVENT SHALL TU/e OR CONTRIBUTORS BE LIABLE    *
+ *  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR        *
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT   *
+ *  OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;     *
+ *  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF       *
+ *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT           *
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE   *
+ *  USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH    *
+ *  DAMAGE.                                                             *
+ *                                                                      *
+ *  The views and conclusions contained in the software and             *
+ *  documentation are those of the authors and should not be            *
+ *  interpreted as representing official policies, either expressed or  *
+ *  implied, of TU/e.                                                   *
+ ************************************************************************/
+
+#ifndef WM_EVIDENCESET_H_
+#define WM_EVIDENCESET_H_
+
+#include "wire/core/datatypes.h"
+
+#include <vector>
+
+namespace mhf {
+
+class Evidence;
+
+/**
+ * @author Sjoerd van den Dries
+ * @date December, 2012
+ *
+ * @brief A set of Evidence items which all originate from the same point
+ * int time.
+ */
+class EvidenceSet {
+
+public:
+
+    EvidenceSet();
+
+    virtual ~EvidenceSet();
+
+    /**
+     * @brief Adds evidence to the evidence set
+     * @param ev The evidence
+     */
+    void add(Evidence* ev);
+
+    /**
+     * @brief Returns the number of evidence items in the set
+     * @return The number of evidence items in the set
+     */
+    unsigned int size() const;
+
+    /**
+     * @brief Returns the time from which all evidence in the set originates
+     * @return The time from which all evidence in the set originates
+     */
+    const Time& getTimestamp() const;
+
+    /**
+     *  Returns a read-only (constant) iterator that points to the
+     *  first evidence item in the evidence set
+     */
+    std::vector<Evidence*>::const_iterator begin() const;
+
+    /**
+     *  Returns a read-only (constant) iterator that points one past the
+     * last evidence item in the evidence set
+     */
+    std::vector<Evidence*>::const_iterator end() const;
+
+    typedef std::vector<Evidence*>::const_iterator const_iterator;
+
+protected:
+
+    /// The time from which all evidence in the set originates
+    Time timestamp_;
+
+    /// Collection of evidence items
+    std::vector<Evidence*> evidence_;
+
+};
+
+}
+
+#endif /* EVIDENCESET_H_ */

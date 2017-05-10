@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <node pkg="wire_viz" type="visualization" respawn="false" name="visualization" output="screen">     
+        <rosparam file="$(find wire_viz)/parameters/detections.yaml" command="load" />
+    </node>
+
+</launch>

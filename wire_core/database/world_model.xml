@@ -1,0 +1,19 @@
+<evidence>
+
+    <object>
+        <discrete_property name="class_label" value="cup" probability="1.0" />
+        <discrete_property name="color" value="green" probability="0.9" />
+        <continuous_property name="position" value="1 2 0.8" cov="0.1" />
+        <continuous_property name="orientation" value="0 0 0 1" cov="0.01" />
+    </object>
+
+    <object>
+        <discrete_property name="class_label" value="cup" probability="1.0" />
+        <discrete_property name="color" value="red" probability="0.7" />
+        <continuous_property name="position" value="1 2.3 0.8" cov="0.1" />
+        <continuous_property name="orientation" value="0 0 0 1" cov="0.01" />
+    </object>
+    
+</evidence>
+
+

@@ -1,0 +1,2 @@
+#!/bin/sh
+valgrind --tool=memcheck --leak-check=yes `rospack find problib`/bin/problib_test

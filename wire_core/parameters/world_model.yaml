@@ -1,0 +1,5 @@
+world_model_frame: /map
+output_frame: /map
+
+evidence_topics:
+ - /world_evidence

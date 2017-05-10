@@ -1,0 +1,24 @@
+# Specify marker properties for world model input (always specify default first)
+world_evidence:
+ - {class: default, r: 1, g: 1, b: 1, scale_x: 0.07, scale_y: 0.07, scale_z: 0.07, show_text: false}
+ - {class: text,    r: 1, g: 1, b: 1, scale_x: 0.1,  scale_y: 0.1,  scale_z: 0.1,  offset_z_pos: 0.2}
+ - {class: cup,     r: 0, g: 1, b: 0, scale_x: 0.07, scale_y: 0.07, scale_z: 0.1,  type: cylinder}
+
+
+# Specify marker properties for world model output (always specify default first)
+world_state:
+ - {class: default, r: 0, g: 1, b: 0, scale_x: 0.1, scale_y: 0.1, scale_z: 0.1, show_text: true}
+ - {class: text,    r: 1, g: 0, b: 0, scale_x: 0.1, scale_y: 0.1, scale_z: 0.1, offset_z_pos: 0.2}
+ - {class: cup,     r: 0, g: 1, b: 0, scale_x: 0.1, scale_y: 0.1, scale_z: 0.1, type: cylinder}
+
+
+# Discrete attributes that are shown in the text label for the world model input
+world_evidence_attributes:
+ - {color: 1, shape: 0, class_label: 1}
+ 
+# Discrete attributes that are shown in the text label for the world model output
+world_state_attributes:
+ - {ID: 1, class_label: 0, color: 0, shape: 0, name: 0}
+
+# Frame in which all markers are shown
+marker_frame: /map

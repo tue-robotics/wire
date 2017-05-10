@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="models" default="$(find wire_core)/models/world_object_models.xml" />
+
+    <node pkg="wire_core" type="wire_server" respawn="false" name="wire_server" output="screen" >
+        <rosparam file="$(find wire_core)/parameters/world_model.yaml" command="load" ns=""/>
+        <param name="knowledge_filename" value="$(arg models)"/>   
+    </node>
+
+</launch>

@@ -1,0 +1,28 @@
+<package>
+  <name>problib</name>
+  <version>0.0.0</version>
+  <description>
+     problib
+  </description>
+  <maintainer email="jos.elfring@tno.nl">Sjoerd van den Dries, Jos Elfinrg</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/problib</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>armadillo_matrix</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>ros_cpp</run_depend>
+  <run_depend>armadillo_matrix</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>std_msgs</run_depend>
+    
+  <export>
+
+  </export>
+</package>
+
+

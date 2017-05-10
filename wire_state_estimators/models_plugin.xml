@@ -1,0 +1,15 @@
+<library path="lib/libdiscrete_estimator">
+  <class name="wire_state_estimators/DiscreteEstimator" type="DiscreteFilter" base_class_type="IStateEstimator" />
+</library>
+
+<library path="lib/libposition_estimator">
+  <class name="wire_state_estimators/PositionEstimator" type="PositionFilter" base_class_type="IStateEstimator" />
+</library>
+
+<library path="lib/libmultimodel_estimator">
+  <class name="wire_state_estimators/MultiModelEstimator" type="MultiModelFilter" base_class_type="IStateEstimator" />
+</library>
+
+<library path="lib/libfixed_estimator">
+  <class name="wire_state_estimators/FixedEstimator" type="FixedState" base_class_type="IStateEstimator" />
+</library>
