@@ -32,7 +32,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES problib
-  CATKIN_DEPENDS armadillo_matrix
+  CATKIN_DEPENDS message_runtime armadillo_matrix
 #  DEPENDS system_lib
 )
 
