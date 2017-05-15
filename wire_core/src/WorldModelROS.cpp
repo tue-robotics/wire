@@ -12,6 +12,8 @@
 
 #include "boost/thread.hpp"
 
+#include <list>
+
 using namespace std;
 using namespace mhf;
 
@@ -242,7 +244,7 @@ void WorldModelROS::processEvidence(const wire_msgs::WorldEvidence& world_eviden
     warnings_.str("");
 
     EvidenceSet evidence_set;
-    list<Evidence*> measurements_mem;
+    std::list<Evidence*> measurements_mem;
 
     const vector<wire_msgs::ObjectEvidence>& object_evidence = world_evidence_msg.object_evidence;
     for(vector<wire_msgs::ObjectEvidence>::const_iterator it_ev = object_evidence.begin(); it_ev != object_evidence.end(); ++it_ev) {
