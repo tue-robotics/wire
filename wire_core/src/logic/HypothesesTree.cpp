@@ -26,8 +26,6 @@
 #include <cassert>
 #include <float.h>
 
-using namespace std;
-
 #ifdef MHF_MEASURE_TIME
     #include <time.h>
 #endif
@@ -74,6 +72,7 @@ void HypothesisTree::addEvidence(const EvidenceSet& ev_set) {
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &t_start_total);
 #endif
 
+    //** Propagate all objects, compute association probabilities and add all possible measurement-track assignments
     for(EvidenceSet::const_iterator it_ev = ev_set.begin(); it_ev != ev_set.end(); ++it_ev) {
         ObjectStorage::getInstance().match(**it_ev);
     }
@@ -120,7 +119,7 @@ void HypothesisTree::applyAssignments() {
     DEBUG_INFO("applyAssignments - begin\n");
 
     // iterate over all leaf hypotheses
-    for (list<Hypothesis*>::iterator it = leafs_.begin(); it != leafs_.end(); ++it) {
+    for (std::list<Hypothesis*>::iterator it = leafs_.begin(); it != leafs_.end(); ++it) {
         DEBUG_INFO("  materializing hyp %p, with parent %p\n", (*it), (*it)->getParent());
         (*it)->applyAssignments();
     }
@@ -134,8 +133,8 @@ void HypothesisTree::expandTree(const EvidenceSet& ev_set) {
 
     //** Create new objects based on measurements
 
-    list<Assignment*> new_assignments;
-    list<Assignment*> clutter_assignments;
+    std::list<Assignment*> new_assignments;
+    std::list<Assignment*> clutter_assignments;
     for(EvidenceSet::const_iterator it_ev = ev_set.begin(); it_ev != ev_set.end(); ++it_ev) {
         // new
         new_assignments.push_back(new Assignment(Assignment::NEW, *it_ev, 0, KnowledgeDatabase::getInstance().getProbabilityNew(**it_ev)));
@@ -151,25 +150,29 @@ void HypothesisTree::expandTree(const EvidenceSet& ev_set) {
 
     //** expand all current leaf hypotheses
 
-    priority_queue<AssignmentSet*, vector<AssignmentSet*>, compareAssignmentSets > assignment_sets;
+    std::priority_queue<AssignmentSet*, std::vector<AssignmentSet*>, compareAssignmentSets > assignment_sets;
 
     DEBUG_INFO(" - Create assignment matrices and assignment sets\n");
 
-    for (list<Hypothesis*>::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
+    for (std::list<Hypothesis*>::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
         Hypothesis* hyp = *it_hyp;
 
-        for(list<Assignment*>::iterator it_ass = new_assignments.begin(); it_ass != new_assignments.end(); ++it_ass) {
+        // add new object assignments to current hypothesis
+        for(std::list<Assignment*>::iterator it_ass = new_assignments.begin(); it_ass != new_assignments.end(); ++it_ass) {
             hyp->addPotentialAssignment(*it_ass);
         }
 
-        for(list<Assignment*>::iterator it_ass = clutter_assignments.begin(); it_ass != clutter_assignments.end(); ++it_ass) {
+        // add clutter assignments to current hypothesis
+        for(std::list<Assignment*>::iterator it_ass = clutter_assignments.begin(); it_ass != clutter_assignments.end(); ++it_ass) {
             hyp->addPotentialAssignment(*it_ass);
         }
 
-        // sort assignment matrix
+        // evidence-to-object assignments are added in addEvidence() method already
+
+        // sort assignment matrix based on assignment probabilities
         hyp->getAssignmentMatrix()->sortAssignments();
 
-        // create empty assignment set
+        // create empty assignment set, add assignments and update probability (product hypothesis and assignment probs)
         AssignmentSet* ass_set = new AssignmentSet(hyp, hyp->getAssignmentMatrix());
         assignment_sets.push(ass_set);
     }
@@ -179,7 +182,7 @@ void HypothesisTree::expandTree(const EvidenceSet& ev_set) {
     double min_prob = 0;
 
     // set all current leafs to inactive
-    for (list<Hypothesis*>::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
+    for (std::list<Hypothesis*>::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
         (*it_hyp)->setInactive();
     }
 
@@ -187,15 +190,18 @@ void HypothesisTree::expandTree(const EvidenceSet& ev_set) {
 
     int n_iterations = 0;
 
+    // add hypotheses as long as there are criteria are met
     while(!assignment_sets.empty() && leafs_.size() < num_max_hyps_ && assignment_sets.top()->getProbability() > min_prob) {
         // assignment_sets.top()->print();
 
+        // Get most probable assignment
         ++n_iterations;
         DEBUG_INFO("  #assignment sets = %i\n", (int)assignment_sets.size());
         AssignmentSet* ass_set = assignment_sets.top();
 
         DEBUG_INFO("  inspecting assignment set %p with probability %.16f\n", ass_set, ass_set->getProbability());
 
+        // remove most probable assignment (stored in ass_set pointer above)
         assignment_sets.pop();
         Hypothesis* hyp = ass_set->getHypothesis();
 
@@ -228,9 +234,9 @@ void HypothesisTree::expandTree(const EvidenceSet& ev_set) {
             /* ************************************************************************* */
         }
 
-        list<AssignmentSet*> child_assignment_sets;
+        std::list<AssignmentSet*> child_assignment_sets;
         ass_set->expand(child_assignment_sets);
-        for(list<AssignmentSet*>::iterator it_child = child_assignment_sets.begin(); it_child != child_assignment_sets.end(); ++it_child) {
+        for(std::list<AssignmentSet*>::iterator it_child = child_assignment_sets.begin(); it_child != child_assignment_sets.end(); ++it_child) {
             assignment_sets.push(*it_child);
         }
 
@@ -263,12 +269,12 @@ void HypothesisTree::expandTree(const EvidenceSet& ev_set) {
 void HypothesisTree::normalizeProbabilities() {
     // Calculate sum of all probabilities
     double p_total = 0;
-    for(list<Hypothesis* >::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
+    for(std::list<Hypothesis* >::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
         p_total += (*it_hyp)->getProbability();
     }
 
     // Normalize all probabilities
-    for(list<Hypothesis* >::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
+    for(std::list<Hypothesis* >::iterator it_hyp = leafs_.begin(); it_hyp != leafs_.end(); ++it_hyp) {
         (*it_hyp)->setProbability((*it_hyp)->getProbability() / p_total);
     }
 
@@ -291,19 +297,19 @@ void HypothesisTree::pruneTree(const Time& timestamp) {
 
     double prob_ratios[] = {1e-8, 1e-7, 1e-6, 1e-5, 1e-5, 1e-4, 1};
 
-    list<Hypothesis*> hyp_stack;
+    std::list<Hypothesis*> hyp_stack;
     hyp_stack.push_back(root_);
 
     while(!hyp_stack.empty()) {
         Hypothesis* hyp = hyp_stack.front();
         hyp_stack.pop_front();
 
-        list<Hypothesis*>& children = hyp->getChildHypotheses();
+        std::list<Hypothesis*>& children = hyp->getChildHypotheses();
         if (!children.empty()) {
 
             // determine best branch of root hypothesis (highest sum of leaf probabilities)
             Hypothesis* best_child = *children.begin();
-            for (list<Hypothesis*>::const_iterator it_child = children.begin(); it_child != children.end(); ++it_child) {
+            for (std::list<Hypothesis*>::const_iterator it_child = children.begin(); it_child != children.end(); ++it_child) {
                 if ((*it_child)->getProbability() > best_child->getProbability()) {
                     best_child = *it_child;
                 }
@@ -320,7 +326,7 @@ void HypothesisTree::pruneTree(const Time& timestamp) {
 
             double min_prob = best_child->getProbability() * prob_ratio;
 
-            for (list<Hypothesis*>::iterator it_child = children.begin(); it_child != children.end();) {
+            for (std::list<Hypothesis*>::iterator it_child = children.begin(); it_child != children.end();) {
                 bool prune_child = false;
 
                 if (*it_child != best_child) {
@@ -368,7 +374,7 @@ void HypothesisTree::pruneTree(const Time& timestamp) {
 /* *                                GETTERS                                     * */
 /* ****************************************************************************** */
 
-const list<Hypothesis*>& HypothesisTree::getHypotheses() const {
+const std::list<Hypothesis*>& HypothesisTree::getHypotheses() const {
     return leafs_;
 }
 
@@ -381,7 +387,7 @@ const Hypothesis& HypothesisTree::getMAPHypothesis() const {
     return *MAP_hypothesis_;
 }
 
-const list<SemanticObject*>& HypothesisTree::getMAPObjects() const {
+const std::list<SemanticObject*>& HypothesisTree::getMAPObjects() const {
     DEBUG_INFO("getMAPObjects - begin\n");
     return getMAPHypothesis().getObjects();
 }
@@ -392,9 +398,9 @@ const list<SemanticObject*>& HypothesisTree::getMAPObjects() const {
 /* ****************************************************************************** */
 
 void HypothesisTree::showStatistics() {
-    cout << "   Number of hypotheses        = " << leafs_.size() << endl;
-    cout << "   Max probability             = " << getMAPHypothesis().getProbability() << endl;
-    cout << "   Tree height                  = " << tree_height_ << endl;
+    std::cout << "   Number of hypotheses        = " << leafs_.size() << std::endl;
+    std::cout << "   Max probability             = " << getMAPHypothesis().getProbability() << std::endl;
+    std::cout << "   Tree height                  = " << tree_height_ << std::endl;
 }
 
 }

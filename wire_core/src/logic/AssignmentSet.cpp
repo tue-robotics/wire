@@ -15,8 +15,6 @@
 #include <stdio.h>
 #include <set>
 
-using namespace std;
-
 namespace mhf {
 
 AssignmentSet::AssignmentSet(Hypothesis* hyp, AssignmentMatrix* assignment_matrix) :
@@ -39,7 +37,7 @@ AssignmentSet::AssignmentSet(const AssignmentSet& orig) :
 AssignmentSet::~AssignmentSet() {
 }
 
-void AssignmentSet::expand(list<AssignmentSet*>& children) const {
+void AssignmentSet::expand(std::list<AssignmentSet*>& children) const {
     for(unsigned int i = n_blocked_; i < evidence_assignments_.size(); ++i) {
         if (evidence_assignments_[i] + 1 < assignment_matrix_->getNumAssignments(i)) {
             AssignmentSet* child = new AssignmentSet(*this);
@@ -57,7 +55,7 @@ const Assignment& AssignmentSet::getMeasurementAssignment(unsigned int i_ev) con
     return assignment_matrix_->getAssignment(i_ev, evidence_assignments_[i_ev]);
 }
 
-void AssignmentSet::getAllAssignments(list<const Assignment*>& assignments) const {
+void AssignmentSet::getAllAssignments(std::list<const Assignment*>& assignments) const {
     for(unsigned int i = 0; i < evidence_assignments_.size(); ++i) {
         assignments.push_back(&getMeasurementAssignment(i));
     }
@@ -95,7 +93,7 @@ bool AssignmentSet::isValid() const {
 }
 
 void AssignmentSet::print() const {
-    cout << endl << "===== P = " << getProbability() << " ====" << endl;
+    std::cout << std::endl << "===== P = " << getProbability() << " ====" << std::endl;
 
     for(unsigned int i = 0; i < evidence_assignments_.size(); ++i) {
         for(unsigned int j = 0; j <  assignment_matrix_->getNumAssignments(i); ++j) {
@@ -110,7 +108,7 @@ void AssignmentSet::print() const {
     }
 
     for(unsigned int i = 0; i < evidence_assignments_.size(); ++i) {
-        cout << assignment_matrix_->getAssignment(i, evidence_assignments_[i]).toString() << endl;
+        std::cout << assignment_matrix_->getAssignment(i, evidence_assignments_[i]).toString() << std::endl;
     }
 
     isValid();
