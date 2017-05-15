@@ -43,7 +43,7 @@ FixedState::FixedState() {
 FixedState::FixedState(const pbl::PDF& pdf) : pdf_(pdf.clone()) {
 }
 
-FixedState::FixedState(const FixedState& orig) : IStateEstimator(orig), pdf_(orig.pdf_->clone()) {
+FixedState::FixedState(const FixedState& orig) : mhf::IStateEstimator(orig), pdf_(orig.pdf_->clone()) {
 }
 
 FixedState::~FixedState() {
@@ -68,5 +68,4 @@ const pbl::PDF& FixedState::getValue() const {
 }
 
 #include <pluginlib/class_list_macros.h>
-//PLUGINLIB_DECLARE_CLASS( wire_state_estimators, FixedEstimator, FixedState, mhf::IStateEstimator )
 PLUGINLIB_EXPORT_CLASS( FixedState, mhf::IStateEstimator )

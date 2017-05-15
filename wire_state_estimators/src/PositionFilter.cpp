@@ -41,7 +41,7 @@ PositionFilter::PositionFilter() : t_last_update_(0), t_last_propagation_(0), ka
     fixed_pdf_(0), max_acceleration_(0), fixed_pdf_cov_(0), kalman_timeout_(0) {
 }
 
-PositionFilter::PositionFilter(const PositionFilter& orig) : IStateEstimator(orig), t_last_update_(orig.t_last_update_),
+PositionFilter::PositionFilter(const PositionFilter& orig) : mhf::IStateEstimator(orig), t_last_update_(orig.t_last_update_),
     t_last_propagation_(orig.t_last_propagation_), kalman_filter_(0), fixed_pdf_(0), max_acceleration_(orig.max_acceleration_),
     fixed_pdf_cov_(orig.fixed_pdf_cov_ ), kalman_timeout_(orig.kalman_timeout_) {
 
@@ -165,5 +165,4 @@ bool PositionFilter::setParameter(const std::string &param, double v) {
 }
 
 #include <pluginlib/class_list_macros.h>
-//PLUGINLIB_DECLARE_CLASS( wire_state_estimators, PositionEstimator, PositionFilter, mhf::IStateEstimator )
 PLUGINLIB_EXPORT_CLASS( PositionFilter, mhf::IStateEstimator )

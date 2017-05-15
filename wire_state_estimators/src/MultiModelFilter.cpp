@@ -50,7 +50,7 @@ MultiModelFilter::MultiModelFilter() : initialized_(false) {
     addEstimator(e2);
 }
 
-MultiModelFilter::MultiModelFilter(const MultiModelFilter& orig) : IStateEstimator(orig), initialized_(orig.initialized_),
+MultiModelFilter::MultiModelFilter(const MultiModelFilter& orig) : mhf::IStateEstimator(orig), initialized_(orig.initialized_),
         mixture_(orig.mixture_) {
     for(unsigned int i = 0; i < orig.estimators_.size(); ++i) {
         estimators_.push_back(orig.estimators_[i]->clone());
@@ -155,5 +155,4 @@ bool MultiModelFilter::setParameter(const std::string &param, double v) {
 }
 
 #include <pluginlib/class_list_macros.h>
-//PLUGINLIB_DECLARE_CLASS( wire_state_estimators, MultiModelEstimator, MultiModelFilter, mhf::IStateEstimator )
 PLUGINLIB_EXPORT_CLASS( MultiModelFilter, mhf::IStateEstimator )

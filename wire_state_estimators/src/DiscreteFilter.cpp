@@ -42,7 +42,7 @@ DiscreteFilter::DiscreteFilter() {
 	++N_DISCRETEKALMAN_FILTER;
 }
 
-DiscreteFilter::DiscreteFilter(const DiscreteFilter& orig) : IStateEstimator(orig), pmf_(orig.pmf_) {
+DiscreteFilter::DiscreteFilter(const DiscreteFilter& orig) : mhf::IStateEstimator(orig), pmf_(orig.pmf_) {
 	++N_DISCRETEKALMAN_FILTER;
 }
 
@@ -72,5 +72,4 @@ const pbl::PDF& DiscreteFilter::getValue() const {
 }
 
 #include <pluginlib/class_list_macros.h>
-//PLUGINLIB_DECLARE_CLASS( wire_state_estimators, DiscreteEstimator, DiscreteFilter, mhf::IStateEstimator )
 PLUGINLIB_EXPORT_CLASS( DiscreteFilter, mhf::IStateEstimator )
