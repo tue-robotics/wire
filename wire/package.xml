@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
 <package>
   <name>wire</name>
-  <version>0.0.0</version>
-  <description>The wm package</description>
+  <version>0.0.1</version>
+  <description>The wire meta package is implements a framework that 
+     generates and maintains one consistent world state estimate based 
+     on object detections. It solves the data association problem by 
+     maintaining multiple hypotheses and facilitates tracking of various
+     object attributes. The state estimators used for estimation and the
+     probabilistic models used for association can be configured.
+  </description>
 
   <maintainer email="jos.elfring@tno.nl">Jos Elfring</maintainer>
 
@@ -27,9 +33,12 @@
   
   <!-- Wire visualization -->
   <run_depend>wire_viz</run_depend>
+  
+  <!-- Wire tutorials -->
+  <run_depend>wire_tutorials</run_depend>
 
   <export>
-    <metapackage/>
+    <metapackage />
   </export>
 
 </package>
