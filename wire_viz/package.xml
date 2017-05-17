@@ -1,6 +1,6 @@
 <package>
   <name>wire_viz</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>
      Package that visualizes WIRE World Model input and output in RViz using visualization markers
   </description>

@@ -1,6 +1,6 @@
 <package>
   <name>armadillo_matrix</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>
      A ROS wrapper for Armadillo, a linear algebra library.
   </description>
