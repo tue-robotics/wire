@@ -1,0 +1,21 @@
+<package>
+  <name>wire_tutorials</name>
+  <version>0.0.0</version>
+  <description>
+     wire_tutorials
+  </description>
+  <maintainer email="jos.elfring@tno.nl">Sjoerd van den Dries, Jos Elfring</maintainer>
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roscpp</build_depend>
+  <build_depend>wire_msgs</build_depend>
+  <build_depend>problib</build_depend>
+  
+  <run_depend>roscpp</run_depend>
+  <run_depend>wire_msgs</run_depend>
+  <run_depend>problib</run_depend>
+    
+</package>
+
+

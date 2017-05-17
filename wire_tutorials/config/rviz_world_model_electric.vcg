@@ -1,0 +1,34 @@
+Background\ ColorR=0
+Background\ ColorG=0
+Background\ ColorB=0
+Fixed\ Frame=/map
+Target\ Frame=<Fixed Frame>
+Camera.Enabled=1
+Camera.Image\ Rendering=background & overlay
+Camera.Image\ Topic=/camera/rgb/image_color
+Camera.Overlay\ Alpha=0.5
+Camera.Transport\ Hint=raw
+Camera.Zoom\ Factor=1
+MarkerArray.Enabled=1
+MarkerArray.Marker\ Array\ Topic=/visualization_markers/world_evidence
+MarkerArray.world_evidence=1
+MarkerArray2.Enabled=1
+MarkerArray2.Marker\ Array\ Topic=/visualization_markers/world_state
+MarkerArray2.world_state=1
+Tool\ 2D\ Nav\ GoalTopic=/move_base_simple/goal
+Tool\ 2D\ Pose\ EstimateTopic=initialpose
+Camera\ Type=rviz::OrbitViewController
+Camera\ Config=1.15279 6.25762 4.15793 0.000735375 -0.00131221 1.90872e-06
+Property\ Grid\ State=selection=MarkerArray2.Enabled.MarkerArray2.Marker Array Topic;expanded=.Global Options,MarkerArray.Enabled,MarkerArray.Enabled.MarkerArray.Namespaces,MarkerArray2.Enabled,MarkerArray2.Enabled.MarkerArray2.Namespaces,Camera.Enabled;scrollpos=0,0;splitterpos=327,670;ispageselected=1
+[Display0]
+Name=MarkerArray
+Package=rviz
+ClassName=rviz::MarkerArrayDisplay
+[Display1]
+Name=MarkerArray2
+Package=rviz
+ClassName=rviz::MarkerArrayDisplay
+[Display2]
+Name=Camera
+Package=rviz
+ClassName=rviz::CameraDisplay

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <node pkg="rviz" type="rviz" respawn="false" name="rviz_world_model" output="screen" args="-d $(find wire_tutorials)/config/rviz_world_model_fuerte.vcg" />
+
+    <include file="$(find wire_viz)/launch/start.launch" />   
+
+</launch>
