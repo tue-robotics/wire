@@ -12,8 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   problib
   std_srvs
   cmake_modules
-  message_generation
-  genmsg
 )
 
 # TinyXML
@@ -30,7 +28,6 @@ catkin_package(
     pluginlib
     problib
     std_srvs
-    message_runtime
   DEPENDS
     TinyXML
 )
@@ -86,8 +83,6 @@ target_link_libraries(wire ${catkin_LIBRARIES} ${TinyXML_LIBRARIES})
 # ROS nodes
 add_executable(wire_server src/world_model.cpp) 
 target_link_libraries(wire_server wire)
-add_dependencies(wire_server wire_core_generate_messages_cpp)
 
 add_executable(dummy_publisher src/dummy_evidence_publisher.cpp) 
 target_link_libraries(dummy_publisher wire)
-add_dependencies(dummy_publisher wire_core_generate_messages_cpp)
