@@ -70,23 +70,32 @@ void worldStateCallback(const wire_msgs::WorldState::ConstPtr& msg) {
 					double p = pmf->getProbability(label);
 					ROS_INFO(" - class %s with probability %f", label.c_str(), p);
 				}
-				// Position
+					// Position
 				else if (it_prop->attribute == "position") {
-					const pbl::Mixture* pos_pdf = pbl::PDFtoMixture(*pdf);
-					if (pos_pdf) {
-						const pbl::Gaussian* pos_gauss = getBestGaussianFromMixture(*pos_pdf);
-						if (pos_gauss) {
-							const pbl::Vector& pos = pos_gauss->getMean();
-							ROS_INFO(" - position: (%f,%f,%f)", pos(0), pos(1), pos(2));
-							ROS_INFO(" - diagonal position cov: (%f,%f,%f)",
-									pos_gauss->getCovariance()(0, 0), pos_gauss->getCovariance()(1, 1), pos_gauss->getCovariance()(2, 2));
 
-						}
-					} else {
-						ROS_INFO(" - position: object position unknown (uniform distribution)");
+					// Get (Gaussian) position
+					const pbl::Gaussian* pos_gauss;
+					if (pdf->type() == pbl::PDF::MIXTURE) {
+						const pbl::Mixture* pos_pdf = pbl::PDFtoMixture(*pdf);
+						if (pos_pdf)
+							pos_gauss = getBestGaussianFromMixture(*pos_pdf);
+						else
+							ROS_INFO(" - position: object position unknown (uniform distribution)");
+					}
+					else if (pdf->type() == pbl::PDF::GAUSSIAN) {
+						pos_gauss = pbl::PDFtoGaussian(*pdf);
+					}
+
+					// Print Gaussian position
+					if (pos_gauss) {
+						const pbl::Vector& pos = pos_gauss->getMean();
+						ROS_INFO(" - position: (%f,%f,%f)", pos(0), pos(1), pos(2));
+						ROS_INFO(" - diagonal position cov: (%f,%f,%f)",
+										 pos_gauss->getCovariance()(0, 0), pos_gauss->getCovariance()(1, 1), pos_gauss->getCovariance()(2, 2));
+
 					}
 				}
-				// Orientation
+					// Orientation
 				else if (it_prop->attribute == "orientation") {
 					const pbl::Mixture* orientation_pdf = pbl::PDFtoMixture(*pdf);
 					if (orientation_pdf) {
@@ -99,7 +108,7 @@ void worldStateCallback(const wire_msgs::WorldState::ConstPtr& msg) {
 						ROS_INFO(" - orientation: object orientation unknown (uniform distribution)");
 					}
 				}
-				// Color
+					// Color
 				else if (it_prop->attribute == "color") {
 					string color = "";
 					pdf->getExpectedValue(color);
