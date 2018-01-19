@@ -37,7 +37,7 @@
 #ifndef PROBLIB_CONVERSIONS_H_
 #define PROBLIB_CONVERSIONS_H_
 
-#include "problib/PDF.h"
+#include "problib/pdfs/PDF.h"
 
 #include "problib/pdfs/Gaussian.h"
 #include "problib/pdfs/Mixture.h"
