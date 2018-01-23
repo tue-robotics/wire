@@ -63,8 +63,9 @@ add_library(problib
         include/${PROJECT_NAME}/pdfs/Hybrid.h
         include/${PROJECT_NAME}/pdfs/PMF.h)
 target_link_libraries(problib ${catkin_LIBRARIES})
+add_dependencies(problib ${${PROJECT_NAME}_EXPORTED_TARGETS})
+
 
 # add test executable
 add_executable(problib_test src/test.cpp)
 target_link_libraries(problib_test problib)
-add_dependencies(problib_test problib_generate_messages_cpp)
