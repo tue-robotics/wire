@@ -18,7 +18,7 @@ catkin_package(
     problib
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(${catkin_INCLUDE_DIRS})
 
 ## Build
 
