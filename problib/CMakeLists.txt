@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
   armadillo_matrix
-  genmsg
+  std_msgs
 )
 
 # Generate messages in the 'msg' folder
@@ -30,7 +30,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES problib
-  CATKIN_DEPENDS message_runtime armadillo_matrix
+  CATKIN_DEPENDS message_runtime armadillo_matrix std_msgs
 #  DEPENDS system_lib
 )
 

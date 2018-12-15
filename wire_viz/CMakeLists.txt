@@ -29,9 +29,8 @@ catkin_package(
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 ## Build
-
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}") # C++ 11
-set(CMAKE_CXX_FLAGS "-Wreturn-type ${CMAKE_CXX_FLAGS}") # Return type checking
+add_compile_options(-std=c++0x) # C++ 11
+add_compile_options(-Wreturn-type) # Return type checking
 
 add_library(wire_viz
     src/Visualizer.cpp
