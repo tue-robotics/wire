@@ -4,7 +4,7 @@
   <description>
      A ROS wrapper for Armadillo, a linear algebra library.
   </description>
-  <maintainer email="jos.elfring@tno.nl">Conrad Sanderson - NICTA (www.nicta.com.au), (Wrapper by Sjoerd van den Dries, Jos Elfring)</maintainer>
+  <maintainer email="j.elfring@tue.nl">Conrad Sanderson - NICTA (www.nicta.com.au), (Wrapper by Sjoerd van den Dries, Jos Elfring)</maintainer>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/armadillo_matrix</url>
   <buildtool_depend>catkin</buildtool_depend>

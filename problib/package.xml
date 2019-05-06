@@ -4,7 +4,7 @@
   <description>
      problib
   </description>
-  <maintainer email="jos.elfring@tno.nl">Sjoerd van den Dries, Jos Elfinrg</maintainer>
+  <maintainer email="j.elfring@tue.nl">Sjoerd van den Dries, Jos Elfinrg</maintainer>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/problib</url>
 

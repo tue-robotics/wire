@@ -4,7 +4,7 @@
   <description>
      wire_msgs
   </description>
-  <maintainer email="jos.elfring@tno.nl">Sjoerd van den Dries, Jos Elfring</maintainer>
+  <maintainer email="j.elfring@tue.nl">Sjoerd van den Dries, Jos Elfring</maintainer>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/wire_msgs</url>
   <buildtool_depend>catkin</buildtool_depend>

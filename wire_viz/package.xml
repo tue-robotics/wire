@@ -4,7 +4,7 @@
   <description>
      Package that visualizes WIRE World Model input and output in RViz using visualization markers
   </description>
-  <maintainer email="jos.elfring@tno.nl">Jos Elfring, Sjoerd van den Dries</maintainer>
+  <maintainer email="j.elfring@tue.nl">Jos Elfring, Sjoerd van den Dries</maintainer>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/wire_viz</url>
   
