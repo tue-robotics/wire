@@ -274,7 +274,7 @@ void WorldModelROS::processEvidence(const wire_msgs::WorldEvidence& world_eviden
                     }
                 } else if (prop.attribute == "orientation") {
                     pbl::Gaussian ori_pdf(4);
-                    if (!transformOrientation(*pdf, world_evidence_msg.header.frame_id, ori_pdf)) {
+                    if (transformOrientation(*pdf, world_evidence_msg.header.frame_id, ori_pdf)) {
                         meas->addProperty(AttributeConv::attribute(prop.attribute), ori_pdf);
                     }
                 } else {
