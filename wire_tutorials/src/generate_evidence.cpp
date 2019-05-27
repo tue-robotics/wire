@@ -27,14 +27,6 @@ void addEvidence(wire_msgs::WorldEvidence& world_evidence, double x, double y, d
 	pbl::PDFtoMsg(pbl::Gaussian(pbl::Vector3(x, y, z), pbl::Matrix3(0.0005, 0.0005, 0.0005)), posProp.pdf);
 	obj_evidence.properties.push_back(posProp);
 
-	// Set the continuous orientation property
-	wire_msgs::Property oriProp;
-	oriProp.attribute = "orientation";
-
-	// Set the orientation (0,0,0,1), with covariance matrix 0.01*identity_matrix
-	pbl::PDFtoMsg(pbl::Gaussian(pbl::Vector4(0, 0, 0, 1), pbl::Matrix4(0.01, 0.01, 0.01, 0.01)), oriProp.pdf);
-	obj_evidence.properties.push_back(oriProp);
-
 	// Set the discrete class label property
 	wire_msgs::Property classProp;
 	classProp.attribute = "class_label";
