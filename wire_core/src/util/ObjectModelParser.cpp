@@ -12,6 +12,10 @@
 #include <problib/pdfs/Uniform.h>
 #include <problib/pdfs/PMF.h>
 
+// Hardcoded state estimators that are being used
+#include "wire/state_estimators/PositionFilter.h"
+#include "wire/state_estimators/DiscreteFilter.h"
+
 using namespace std;
 
 namespace mhf {
@@ -104,35 +108,28 @@ pbl::PDF* ObjectModelParser::parsePDF(const TiXmlElement* pdf_elem, std::strings
 bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlElement* elem, std::stringstream& error) {
 
     // check behavior model's attribute and model type
-    string attribute_name, model_type;
-    if (!getAttributeValue(elem, "attribute", attribute_name, error)
-            | !getAttributeValue(elem, "model", model_type, error)) {
+    string attribute_name;
+    if (!getAttributeValue(elem, "attribute", attribute_name, error)) {
         return false;
-    }
-
-    Attribute attribute = AttributeConv::attribute(attribute_name);
-
-    if (!object_model_loader_->isClassAvailable(model_type)){
-        std::vector<std::string> classes = object_model_loader_->getDeclaredClasses();
-        for(unsigned int i = 0; i < classes.size(); ++i){
-            if(model_type == object_model_loader_->getName(classes[i])){
-                //if we've found a match... we'll get the fully qualified name and break out of the loop
-                ROS_WARN("Planner specifications should now include the package name. You are using a deprecated API. Please switch from %s to %s in your yaml file.",
-                        model_type.c_str(), classes[i].c_str());
-                model_type = classes[i];
-                break;
-            }
-        }
     }
 
     IStateEstimator* estimator;
-
-    if (object_model_loader_->isClassAvailable(model_type)) {
-        estimator = object_model_loader_->createClassInstance(model_type)->clone();
-    } else {
-        error << "Unknown model: " << model_type << endl;
-        return false;
+    if (attribute_name == "position")
+    {
+      estimator = new PositionFilter;
     }
+    else if (attribute_name == "shape" || attribute_name == "class_label" || attribute_name == "color")
+    {
+      estimator = new DiscreteFilter;
+    }
+    else
+    {
+      std::cout << "No estimator hardcoded for attribute '" << attribute_name
+                << "', please add it in function ObjectModelParser::parseStateEstimator" << std::endl;
+      return false;
+    }
+
+    Attribute attribute = AttributeConv::attribute(attribute_name);
 
     // set estimator parameters
     const TiXmlElement* param = elem->FirstChildElement("param");
@@ -155,13 +152,14 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
                 const char* v_str = param->Attribute("value");
                 if (v_str) {
                     set_param_ok = estimator->setParameter(string(param_name), string(v_str));
+                    std::cout << "Parameter (string) " << param_name << " set with value: " << v_str << std::endl;
                 } else {
                     error << "State estimator parameters should always have a 'name' and 'value' attribute." << endl;
                 }
             }
 
             if (!set_param_ok) {
-                error << "Unknown parameter for estimator '" << model_type << "': " << param_name << endl;
+                error << "Unknown parameter for hardcoded estimator for attribute '" << attribute_name << "': " << param_name << endl;
             }
 
         } else {

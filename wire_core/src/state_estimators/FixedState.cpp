@@ -34,7 +34,7 @@
  *  implied, of TU/e.                                                   *
  ************************************************************************/
 
-#include "FixedState.h"
+#include "wire/state_estimators/FixedState.h"
 
 FixedState::FixedState() {
 
@@ -66,6 +66,3 @@ void FixedState::reset() {
 const pbl::PDF& FixedState::getValue() const {
 	return *pdf_;
 }
-
-#include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS( FixedState, mhf::IStateEstimator )

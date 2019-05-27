@@ -6,7 +6,7 @@
 
     <object_class name="object"> 
     
-        <behavior_model attribute="position" model="wire_state_estimators/PositionEstimator">
+        <behavior_model attribute="position">
             <pnew type="uniform" dimensions="3" density="0.0001" />            
             <pclutter type="uniform" dimensions="3" density="0.0001" />
 
@@ -15,17 +15,17 @@
             <param name="fixed_pdf_cov" value="0.008" />                
         </behavior_model>
 
-        <behavior_model attribute="color" model="wire_state_estimators/DiscreteEstimator">
+        <behavior_model attribute="color">
             <pnew type="discrete" domain_size="100" />            
             <pclutter type="discrete" domain_size="100" />
         </behavior_model> 
 
-        <behavior_model attribute="class_label" model="wire_state_estimators/DiscreteEstimator">
+        <behavior_model attribute="class_label">
             <pnew type="discrete" domain_size="100" />            
             <pclutter type="discrete" domain_size="100" />
         </behavior_model>
 
-        <behavior_model attribute="shape" model="wire_state_estimators/DiscreteEstimator">
+        <behavior_model attribute="shape">
             <pnew type="discrete" domain_size="10" />            
             <pclutter type="discrete" domain_size="10" />
         </behavior_model>

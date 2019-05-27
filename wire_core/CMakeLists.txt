@@ -57,6 +57,12 @@ add_library(wire
     src/logic/AssignmentMatrix.cpp
     src/logic/Hypothesis.cpp
     src/logic/HypothesesTree.cpp
+    src/state_estimators/DiscreteFilter.cpp
+    src/state_estimators/FixedState.cpp
+    src/state_estimators/KalmanFilter.cpp
+    src/state_estimators/DiscreteFilter.cpp
+    src/state_estimators/MultiModelFilter.cpp
+    src/state_estimators/PositionFilter.cpp
     include/wire/WorldModelROS.h
     include/wire/models/FixedState.h
     include/wire/core/datatypes.h
@@ -68,6 +74,11 @@ add_library(wire
     include/wire/storage/SemanticObject.h
     include/wire/storage/ObjectStorage.h
     include/wire/storage/KnowledgeDatabase.h
+    include/wire/state_estimators/DiscreteFilter.h
+    include/wire/state_estimators/FixedState.h
+    include/wire/state_estimators/KalmanFilter.h
+    include/wire/state_estimators/MultiModelFilter.h
+    include/wire/state_estimators/PositionFilter.h
     include/wire/util/ObjectModelParser.h
     include/wire/logic/Assignment.h
     include/wire/logic/AssignmentSet.h

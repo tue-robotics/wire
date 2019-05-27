@@ -34,7 +34,7 @@
  *  implied, of TU/e.                                                   *
  ************************************************************************/
 
-#include "KalmanFilter.h"
+#include "wire/state_estimators/KalmanFilter.h"
 
 KalmanFilter::KalmanFilter(int dim)
 : meas_dim_(dim), state_dim_(dim * 2), G_(dim * 2), G_small_(dim), a_max_(0) {

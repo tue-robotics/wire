@@ -34,10 +34,10 @@
  *  implied, of TU/e.                                                   *
  ************************************************************************/
 
-#include "MultiModelFilter.h"
-#include "KalmanFilter.h"
+#include "wire/state_estimators/MultiModelFilter.h"
+#include "wire/state_estimators/KalmanFilter.h"
 
-#include "PositionFilter.h"
+#include "wire/state_estimators/PositionFilter.h"
 
 MultiModelFilter::MultiModelFilter() : initialized_(false) {
     PositionFilter* e1 = new PositionFilter();
@@ -153,6 +153,3 @@ bool MultiModelFilter::setParameter(const std::string& param, bool b) {
 bool MultiModelFilter::setParameter(const std::string &param, double v) {
     return true;
 }
-
-#include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS( MultiModelFilter, mhf::IStateEstimator )

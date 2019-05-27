@@ -34,7 +34,7 @@
  *  implied, of TU/e.                                                   *
  ************************************************************************/
 
-#include "DiscreteFilter.h"
+#include "wire/state_estimators/DiscreteFilter.h"
 
 int DiscreteFilter::N_DISCRETEKALMAN_FILTER = 0;
 
@@ -70,6 +70,3 @@ void DiscreteFilter::reset() {
 const pbl::PDF& DiscreteFilter::getValue() const {
 	return pmf_;
 }
-
-#include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS( DiscreteFilter, mhf::IStateEstimator )
