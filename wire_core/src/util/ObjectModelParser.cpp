@@ -30,7 +30,7 @@ std::string ObjectModelParser::getErrorMessage() const {
     return parse_errors_.str();
 }
 
-string ObjectModelParser::getPropertyValue(const TiXmlElement* elem, string prop_name, double& value, stringstream& error, bool optional) {
+string ObjectModelParser::getPropertyValue(const TiXmlElement* elem, string prop_name, double& value, std::stringstream& error, bool optional) {
     const TiXmlElement* p = elem->FirstChildElement(prop_name);
     if (p) {
         return p->Attribute("value", &value);
@@ -41,7 +41,7 @@ string ObjectModelParser::getPropertyValue(const TiXmlElement* elem, string prop
     return "";
 }
 
-bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_name, string& att_value, stringstream& error) {
+bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_name, string& att_value, std::stringstream& error) {
     if (!elem) return false;
 
     const char* value = elem->Attribute(att_name.c_str());
@@ -54,7 +54,7 @@ bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_n
     return true;
 }
 
-bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_name, double& att_value, stringstream& error) {
+bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_name, double& att_value, std::stringstream& error) {
     if (!elem) return false;
 
     const char* value = elem->Attribute(att_name.c_str(), &att_value);

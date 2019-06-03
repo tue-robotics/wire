@@ -295,11 +295,11 @@ void Visualizer::getStructValue(XmlRpc::XmlRpcValue& s, const std::string& name,
 /*
  * Get string
  */
-void Visualizer::getStructValue(XmlRpc::XmlRpcValue& s, const std::string& name, std::string& str, const string& default_value) {
+void Visualizer::getStructValue(XmlRpc::XmlRpcValue& s, const std::string& name, std::string& str, const std::string& default_value) {
 	XmlRpc::XmlRpcValue& v = s[name];
 
 	if (v.getType() == XmlRpc::XmlRpcValue::TypeString) {
-		str = (string)v;
+		str = (std::string)v;
 		return;
 	}
 

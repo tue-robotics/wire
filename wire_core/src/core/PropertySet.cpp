@@ -38,13 +38,13 @@ PropertySet* PropertySet::clone() const {
     return new PropertySet(*this);
 }
 
-void PropertySet::addProperty(const Attribute& att, const pbl::PDF& value) {
-    map<Attribute, Property*>::iterator it = properties_.find(att);
+void PropertySet::addProperty(const Attribute& attribute, const pbl::PDF& value) {
+    map<Attribute, Property*>::iterator it = properties_.find(attribute);
     if (it == properties_.end()) {
-        properties_[att] = new Property(att, FixedState(value));
+        properties_[attribute] = new Property(attribute, FixedState(value));
     } else {
         delete it->second;
-        it->second = new Property(att, FixedState(value));
+        it->second = new Property(attribute, FixedState(value));
     }
 }
 
@@ -52,13 +52,13 @@ void PropertySet::addProperty(const string& att, const pbl::PDF& value) {
     addProperty(AttributeConv::attribute(att), value);
 }
 
-void PropertySet::addProperty(const Attribute& att, const IStateEstimator& estimator) {
-    map<Attribute, Property*>::iterator it = properties_.find(att);
+void PropertySet::addProperty(const Attribute& attribute, const IStateEstimator& estimator) {
+    map<Attribute, Property*>::iterator it = properties_.find(attribute);
     if (it == properties_.end()) {
-        properties_[att] = new Property(att, estimator);
+        properties_[attribute] = new Property(attribute, estimator);
     } else {
         delete it->second;
-        it->second = new Property(att, estimator);
+        it->second = new Property(attribute, estimator);
     }
 }
 

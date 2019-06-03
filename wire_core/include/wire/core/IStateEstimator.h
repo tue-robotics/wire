@@ -90,12 +90,12 @@ public:
      */
     virtual const pbl::PDF& getValue() const = 0;
 
-    /**
-     * @brief Resets the internal state of the estimator to the given PDF
-     * @param pdf The value to which the internal state is set
-     */
-    //virtual void setValue(const pbl::PDF& pdf) {
-    //}
+//    /**
+//     * @brief Resets the internal state of the estimator to the given PDF
+//     * @param pdf The value to which the internal state is set
+//     */
+//    virtual void setValue(const pbl::PDF& pdf) {
+//    }
 
     /**
      * @brief Set a boolean parameter of this state estimator
