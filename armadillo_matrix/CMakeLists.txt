@@ -4,10 +4,7 @@ project(armadillo_matrix)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-)
-
+find_package(catkin REQUIRED)
 
 ## The catkin_package macro generates cmake config files for your package
 ## Declare things to be passed to dependent projects
@@ -18,8 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
         INCLUDE_DIRS include
         LIBRARIES armadillo
-        #  CATKIN_DEPENDS roscpp
-        #  DEPENDS system_lib
 )
 
 ## Specify additional locations of header files
@@ -28,7 +23,6 @@ include_directories(
         include
         ${catkin_INCLUDE_DIRS}
 )
-
 
 ## Declare a C++ library
 add_library(armadillo
