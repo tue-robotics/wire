@@ -73,6 +73,8 @@ protected:
 
     // world model publishers
     ros::Publisher pub_wm_;
+    ros::Publisher pub_numbHypotheses_; // Added by TPCW
+    float numbHypotheses; // Added by TPCW
 
     // evidence subscriber
     std::list<ros::Subscriber> subs_evidence_;

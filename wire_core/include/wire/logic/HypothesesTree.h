@@ -100,12 +100,14 @@ public:
 
     /* SETTERS */
 
-    void addEvidence(const EvidenceSet& ev_set);
+    float addEvidence(const EvidenceSet& ev_set);
 
 
     /* PRINT METHODS */
 
     void showStatistics();
+
+    void pubStatistics();
 
 protected:
 

@@ -14,6 +14,8 @@
 
 #include <list>
 
+#include <std_msgs/Float32.h> // Added by TPCW
+
 using namespace std;
 using namespace mhf;
 
@@ -21,6 +23,7 @@ WorldModelROS::WorldModelROS(tf::TransformListener* tf_listener)
     : loop_rate_(20), world_model_(0),  tf_listener_(tf_listener), is_tf_owner_(false), last_update_duration(0),
       max_update_duration(0), world_model_frame_id_("/map"), output_frame_id_("/map"), max_num_hyps_(100), min_prob_ratio_(1e-10),
       last_update_(0) {
+    numbHypotheses = 0;
     initialize();
 }
 
@@ -78,6 +81,7 @@ bool WorldModelROS::initialize() {
 
     // Publishers
     pub_wm_ = n.advertise<wire_msgs::WorldState>("/world_state", 10);
+    pub_numbHypotheses_ = n.advertise<std_msgs::Float32>("/Number_of_Hypotheses", 10); // Added by TPCW
 
     // initialize the filter
     world_model_ = new HypothesisTree(max_num_hyps_, min_prob_ratio_);
@@ -104,7 +108,7 @@ void WorldModelROS::start() {
         publish();
         ++count;
         if (count == 15) {
-            //showStatistics();
+//            showStatistics();
             count = 0;
         }
         r.sleep();
@@ -294,7 +298,8 @@ void WorldModelROS::processEvidence(const wire_msgs::WorldEvidence& world_eviden
 
     } // end iteration over object evidence list
 
-    world_model_->addEvidence(evidence_set);
+    numbHypotheses = world_model_->addEvidence(evidence_set);
+//    std::cout << "Stukje tekst " << numbHypotheses;
 
     for(list<Evidence*>::iterator it = measurements_mem.begin(); it != measurements_mem.end(); ++it) {
         delete (*it);
@@ -314,6 +319,10 @@ void WorldModelROS::publish() const {
     // Publish results
     pub_wm_.publish(map_world_msg);
 
+    // Added by TPCW
+    std_msgs::Float32 msg16;
+    msg16.data = numbHypotheses;
+    pub_numbHypotheses_.publish(msg16);
 }
 
 const list<SemanticObject*>& WorldModelROS::getMAPObjects() const {

@@ -13,3 +13,8 @@
 <library path="lib/libfixed_estimator">
   <class name="wire_state_estimators/FixedEstimator" type="FixedState" base_class_type="IStateEstimator" />
 </library>
+
+<!-- added by TPCW -->
+<library path="lib/libposition_estimatorTW">
+  <class name="wire_state_estimators/PositionEstimatorTW" type="PositionFilterTW" base_class_type="IStateEstimator" />
+</library>

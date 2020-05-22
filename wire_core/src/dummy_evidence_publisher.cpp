@@ -66,12 +66,13 @@ void generateEvidence() {
 	world_evidence.header.stamp = ros::Time::now();
 	world_evidence.header.frame_id = "/map";
 
+    addEvidence(world_evidence, x_person, 2, 1, "cup");
 	addEvidence(world_evidence, 5, 4, 3, "body");
 	addEvidence(world_evidence, 5, 4, 4, "face");
 	addEvidence(world_evidence, 1, 2, 3, "cup");
 	addEvidence(world_evidence, 3, 2.5, 1, "cup");
 	addEvidence(world_evidence, 2, 2, 3, "test_class");
-	//addEvidence(world_evidence, x_person, 2, 1+x_person, "cup", "");
+
 
 	// Publish results
 	EVIDENCE_PUB.publish(world_evidence);
@@ -93,7 +94,7 @@ int main(int argc, char **argv) {
 	// Subscriber/publisher
 	EVIDENCE_PUB = nh.advertise<wire_msgs::WorldEvidence>("/world_evidence", 100);
 
-	ros::Rate r(20);
+	ros::Rate r(1);
 
 	time_last_cycle_ = ros::Time::now();
 	while (ros::ok()) {
