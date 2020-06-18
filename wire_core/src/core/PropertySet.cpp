@@ -104,6 +104,16 @@ void PropertySet::propagate(const Time& time) {
     timestamp_ = time;
 }
 
+// Added by TPCW
+void PropertySet::updateOOS(const std::vector<float>& data) {
+
+    for(map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
+        it->second->updateOOS(data);
+    }
+
+    return;
+}
+
 void PropertySet::update(const pbl::PDF& z, const Time& time) {
     assert(false);
 }

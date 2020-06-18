@@ -39,6 +39,7 @@
 
 #include "wire/core/IStateEstimator.h"
 #include "problib/conversions.h"
+#include "ros/ros.h"
 
 class KalmanFilter;
 
@@ -49,17 +50,17 @@ class KalmanFilter;
  * a predefined Gaussian distribution over the current state of the filter (to avoid
  * unrealistic propagation of the state).
  */
-class PositionFilterTW : public mhf::IStateEstimator {
+class PositionFilterTW_Gaus : public mhf::IStateEstimator {
 
 public:
 
-    PositionFilterTW();
+    PositionFilterTW_Gaus();
 
-    PositionFilterTW(const PositionFilterTW& orig);
+    PositionFilterTW_Gaus(const PositionFilterTW_Gaus& orig);
 
-    virtual PositionFilterTW* clone() const;
+    virtual PositionFilterTW_Gaus* clone() const;
 
-    virtual ~PositionFilterTW();
+    virtual ~PositionFilterTW_Gaus();
 
     /**
      * @brief Propagates the internal state to Time time
@@ -120,6 +121,11 @@ protected:
     double fixed_pdf_cov_;
 
     double kalman_timeout_;
+
+    // Added by TPCW
+    double OOS_min_x_, OOS_max_x_, OOS_min_y_, OOS_max_y_, OOS_mean_x_, OOS_mean_y_;
+
+    bool isOOS;
 
 };
 

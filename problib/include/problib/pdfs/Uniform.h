@@ -130,6 +130,13 @@ public:
      */
     void setMean(const pbl::Vector mean);
 
+    // Added by TPCW
+    /**
+    * @brief Returns the mean of the Gaussian
+    * @return The mean of the Gaussian
+    */
+    const arma::vec& getMean() const;
+
     /**
      * @brief Set the size of the volume representing this uniform distribution
      * @param size The size of the volumne

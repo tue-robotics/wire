@@ -189,7 +189,7 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
     }
 
     const TiXmlElement* pclutter = elem->FirstChildElement("pclutter");
-    if (pnew) {
+    if (pclutter) {
         pbl::PDF* pdf_clutter = parsePDF(pclutter, error);
         if (pdf_clutter) {
             obj_model->setClutterPDF(attribute, *pdf_clutter);

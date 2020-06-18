@@ -35,6 +35,8 @@ public:
 
     void propagate(const Time& time);
 
+    void updateOOS(const std::vector<float>& data); // Added by TPCW
+
     void update(const pbl::PDF& z, const Time& time);
 
     void reset();

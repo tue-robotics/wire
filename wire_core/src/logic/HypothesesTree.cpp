@@ -24,7 +24,6 @@
 
 #include <queue>
 #include <cassert>
-#include <float.h>
 
 #ifdef MHF_MEASURE_TIME
     #include <time.h>
@@ -63,11 +62,11 @@ namespace mhf {
 /* *                          PUBLIC MHT OPERATIONS                             * */
 /* ****************************************************************************** */
     // Added by TPCW: made a float of this void to return the number of hypotheses. See also header file
-    float HypothesisTree::addEvidence(const EvidenceSet &ev_set) {
+    void HypothesisTree::addEvidence(const EvidenceSet &ev_set) {
         DEBUG_INFO("HypothesesTree::processMeasurements\n");
 
         if (ev_set.size() == 0) {
-            return 0;
+            return;
         }
 
 #ifdef MHF_MEASURE_TIME
@@ -87,8 +86,6 @@ namespace mhf {
         pruneTree(ev_set.getTimestamp());
 
         applyAssignments();
-//        showStatistics();
-        float leafSize = leafs_.size();  // Added by TPCW
 
         // clear old hypotheses leafs
         // The hypotheses will still be there to form a tree, but do not contain any objects anymore
@@ -108,7 +105,7 @@ namespace mhf {
 #endif
 
         DEBUG_INFO("HypothesesTree::processMeasurements - end\n");
-        return leafSize;  // Added by TPCW
+        return;
     }
 
 /* ****************************************************************************** */

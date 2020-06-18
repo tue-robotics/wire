@@ -61,6 +61,14 @@ void Property::propagate(const Time& time) {
     time_ = time;
 }
 
+// Added by TPCW
+void Property::updateOOS(const std::vector<float>& data) {
+    estimator_->setParameter("OOS_min_x", data.at(0));
+    estimator_->setParameter("OOS_max_x", data.at(1));
+    estimator_->setParameter("OOS_min_y", data.at(2));
+    estimator_->setParameter("OOS_max_y", data.at(3));
+}
+
 void Property::reset() {
     estimator_->reset();
 }

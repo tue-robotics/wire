@@ -63,6 +63,7 @@ bool Visualizer::createMarkers(const std_msgs::Header& header, long ID,
 		// Position
 		if (it_prop->attribute == "position") {
 			const pbl::Gaussian* gauss = getBestGaussian(*pdf);
+            const pbl::Uniform* unif = getBestUniform(*pdf);
 			if (gauss) {
 				const pbl::Vector& mean = gauss->getMean();
 
@@ -81,15 +82,35 @@ bool Visualizer::createMarkers(const std_msgs::Header& header, long ID,
 							gauss->dimensions());
 				}
 			}
+			else if (unif) {
+                const pbl::Vector& mean = unif->getMean();
+
+                if (unif->dimensions() == 2) {
+                    ev_pose.setOrigin(tf::Point(mean(0), mean(1), 0));
+                    pos_found = true;
+                } else if (unif->dimensions() == 3) {
+                    pos_found = true;
+                    ev_pose.setOrigin(tf::Point(mean(0), mean(1), mean(2)));
+//                    ev_pose.setOrigin(tf::Point(1.0, 1.0, 1.0));
+                } else {
+                    ROS_WARN("World evidence: position attribute has %d dimensions, Visualizer cannot deal with this.",
+                             unif->dimensions());
+                }
+			}
 		}
 		// Orientation
 		else if (it_prop->attribute == "orientation") {
 			if (pdf->dimensions() == 4) {
 				const pbl::Gaussian* gauss = getBestGaussian(*pdf);
+                const pbl::Uniform* unif = getBestUniform(*pdf);
 				if (gauss) {
 					const pbl::Vector& mean = gauss->getMean();
 					ev_pose.setRotation(tf::Quaternion(mean(0), mean(1), mean(2), mean(3)));
 				}
+                else if (unif) {
+                    const pbl::Vector& mean = unif->getMean();
+                    ev_pose.setRotation(tf::Quaternion(mean(0), mean(1), mean(2), mean(3)));
+                }
 			} else {
 				ROS_WARN("Orientation attribute has %d dimensions, must be 4 (X Y Z W).", pdf->dimensions());
 			}
@@ -247,6 +268,17 @@ const pbl::Gaussian* Visualizer::getBestGaussian(const pbl::PDF& pdf, double min
     }
 
 	return 0;
+}
+
+/*
+ * Get the most probable Uniform from a pdf
+ */
+const pbl::Uniform* Visualizer::getBestUniform(const pbl::PDF& pdf) {
+    if (pdf.type() == pbl::PDF::UNIFORM) {
+        return pbl::PDFtoUniform(pdf);
+    }
+
+    return 0;
 }
 
 

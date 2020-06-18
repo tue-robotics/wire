@@ -62,6 +62,7 @@
 #include "wire/core/datatypes.h"
 #include <list>
 #include <map>
+#include <float.h> // Added by TPCW
 
 namespace mhf {
 
@@ -100,8 +101,7 @@ public:
 
     /* SETTERS */
 
-    float addEvidence(const EvidenceSet& ev_set);
-
+    void addEvidence(const EvidenceSet& ev_set);
 
     /* PRINT METHODS */
 

@@ -137,6 +137,11 @@ void Uniform::setMean(const pbl::Vector mean) {
     mean_ = mean;
 }
 
+// Added by TPCW
+const arma::vec& Uniform::getMean() const {
+    return mean_;
+}
+
 void Uniform::setSize(const pbl::Vector size) {
     size_ = size;
     calculateUniformDensity();

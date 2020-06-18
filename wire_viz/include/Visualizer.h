@@ -81,6 +81,8 @@ protected:
 
 	// Get most probable Gaussian from a pdf
 	const pbl::Gaussian* getBestGaussian(const pbl::PDF& pdf, double min_weight = 0);
+    // Get most probable Uniform from a pdf
+    const pbl::Uniform* getBestUniform(const pbl::PDF& pdf);
 
 	// Set marker type
 	void setMarkerType(XmlRpc::XmlRpcValue& v, MarkerInfo& m);

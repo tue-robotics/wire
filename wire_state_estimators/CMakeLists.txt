@@ -26,13 +26,15 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 ## Build
 
 add_library(position_estimator src/PositionFilter.cpp src/KalmanFilter.cpp)
-add_library(position_estimatorTW src/PositionFilterTW.cpp src/KalmanFilter.cpp) # Added by TPCW
+add_library(position_estimatorTW_Gaus src/PositionFilterTW_Gaus.cpp src/KalmanFilter.cpp) # Added by TPCW
+add_library(position_estimatorTW_Unif src/PositionFilterTW_Unif.cpp src/KalmanFilter.cpp) # Added by TPCW
 add_library(multimodel_estimator src/MultiModelFilter.cpp src/PositionFilter.cpp)
 add_library(discrete_estimator src/DiscreteFilter.cpp)
 add_library(fixed_estimator src/FixedState.cpp)
 
 target_link_libraries(position_estimator ${catkin_LIBRARIES})
-target_link_libraries(position_estimatorTW ${catkin_LIBRARIES}) # Added by TPCW
+target_link_libraries(position_estimatorTW_Gaus ${catkin_LIBRARIES}) # Added by TPCW
+target_link_libraries(position_estimatorTW_Unif ${catkin_LIBRARIES}) # Added by TPCW
 target_link_libraries(multimodel_estimator ${catkin_LIBRARIES})
 target_link_libraries(discrete_estimator ${catkin_LIBRARIES})
 target_link_libraries(fixed_estimator ${catkin_LIBRARIES})

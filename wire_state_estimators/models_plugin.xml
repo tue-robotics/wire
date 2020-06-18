@@ -15,6 +15,10 @@
 </library>
 
 <!-- added by TPCW -->
-<library path="lib/libposition_estimatorTW">
-  <class name="wire_state_estimators/PositionEstimatorTW" type="PositionFilterTW" base_class_type="IStateEstimator" />
+<library path="lib/libposition_estimatorTW_Unif">
+  <class name="wire_state_estimators/PositionEstimatorTW_Unif" type="PositionFilterTW_Unif" base_class_type="IStateEstimator" />
+</library>
+
+<library path="lib/libposition_estimatorTW_Gaus">
+  <class name="wire_state_estimators/PositionEstimatorTW_Gaus" type="PositionFilterTW_Gaus" base_class_type="IStateEstimator" />
 </library>

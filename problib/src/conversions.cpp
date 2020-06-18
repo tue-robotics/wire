@@ -247,14 +247,27 @@ Mixture* deserialize_mixture(const problib::PDF& msg, int& i_data) {
 	return mix;
 }
 
+// Changed by TPCW to propagate uniform position in OOS region
 void serialize_uniform(const Uniform& uniform, problib::PDF& msg) {
+    int dimensions = uniform.dimensions();
 	msg.data.push_back(problib::PDF::UNIFORM);
 	msg.data.push_back(uniform.getMaxDensity());
+
+    const arma::vec& mu = uniform.getMean();
+    for(int i = 0; i < dimensions; ++i) {
+        msg.data.push_back(mu(i));
+    }
 }
 
 Uniform* deserialize_uniform(const problib::PDF& msg, int& i_data) {
 	Uniform* uniform = new Uniform(msg.dimensions);
 	uniform->setDensity(msg.data[i_data++]);
+
+    arma::vec mu(msg.dimensions);
+    for(unsigned int i = 0; i < msg.dimensions; ++i) {
+        mu(i) = msg.data[i_data++];
+    }
+    uniform->setMean(mu);
 	return uniform;
 }
 

@@ -22,6 +22,9 @@
 
 #include "wire/storage/KnowledgeDatabase.h"
 
+#include <std_msgs/Float32.h> // Added by TPCW
+#include <std_msgs/Float32MultiArray.h> // Added by TPCW
+
 namespace mhf {
 
 class HypothesisTree;
@@ -42,6 +45,8 @@ public:
     void registerEvidenceTopic(const std::string& topic_name);
 
     void publish() const;
+
+    void updateOOSRange() const;
 
     void showStatistics() const;
 
@@ -74,10 +79,13 @@ protected:
     // world model publishers
     ros::Publisher pub_wm_;
     ros::Publisher pub_numbHypotheses_; // Added by TPCW
-    float numbHypotheses; // Added by TPCW
+    std_msgs::Float32 numbHypotheses_; // Added by TPCW
 
     // evidence subscriber
     std::list<ros::Subscriber> subs_evidence_;
+
+    // OOS range subscriber Added by TPCW
+    ros::Subscriber OOS_range_subscriber_;
 
     ros::ServiceServer srv_reset_;
 
@@ -114,6 +122,9 @@ protected:
     bool transformOrientation(const pbl::PDF& pdf_in, const std::string& frame_in, pbl::Gaussian& pdf_out) const;
 
     void evidenceCallback(const wire_msgs::WorldEvidence::ConstPtr& world_evidence_msg);
+
+    void OOSRangeCallback(const std_msgs::Float32MultiArray::ConstPtr& array);
+    std::vector<float> OOSRangeData_;
 
     bool resetWorldModel(std_srvs::Empty::Request& req, std_srvs::Empty::Response& res);
 
