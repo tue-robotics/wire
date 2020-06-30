@@ -1,25 +1,24 @@
-<package>
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>wire_state_estimators</name>
   <version>0.0.1</version>
   <description>
      wire_state_estimators
   </description>
-  <maintainer email="j.elfring@tue.nl">Sjoerd van den Dries, Jos Elfring</maintainer>
+  <maintainer email="j.elfring@tue.nl">Jos Elfring</maintainer>
+  <author>Sjoerd van den Dries, Jos Elfring</author>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/wire_msgs</url>
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>wire_core</build_depend>
-  <build_depend>pluginlib</build_depend>
+  <depend>pluginlib</depend>
+  <depend>wire_core</depend>
 
-  <run_depend>wire_core</run_depend>
-  <run_depend>pluginlib</run_depend>
-  
   <export>
     <wire_core plugin="${prefix}/models_plugin.xml" />
   </export>
 
-
 </package>
-
-

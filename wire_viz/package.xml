@@ -1,29 +1,25 @@
-<package>
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>wire_viz</name>
   <version>0.0.1</version>
   <description>
      Package that visualizes WIRE World Model input and output in RViz using visualization markers
   </description>
-  <maintainer email="j.elfring@tue.nl">Jos Elfring, Sjoerd van den Dries</maintainer>
+  <maintainer email="j.elfring@tue.nl">Jos Elfring</maintainer>
+  <author>Sjoerd van den Dries, Jos Elfring</author>
   <license>BSD</license>
   <url type="website">http://ros.org/wiki/wire_viz</url>
-  
+
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>roscpp</build_depend>
-  <build_depend>wire_msgs</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>visualization_msgs</build_depend>
-  <build_depend>problib</build_depend>
-  <build_depend>tf</build_depend>
-
-  <run_depend>roscpp</run_depend>
-  <run_depend>wire_msgs</run_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>visualization_msgs</run_depend>
-  <run_depend>problib</run_depend>
-  <run_depend>tf</run_depend>
+  <depend>geometry_msgs</depend>
+  <depend>problib</depend>
+  <depend>roscpp</depend>
+  <depend>tf</depend>
+  <depend>visualization_msgs</depend>
+  <depend>wire_msgs</depend>
 
 </package>
-
-
