@@ -28,9 +28,9 @@ public:
 
     virtual double getLikelihood(const PDF& pdf) const;
 
-	void clear();
+    void clear();
 
-	double getMaxDensity() const;
+    double getMaxDensity() const;
 
     void addPDF(const PDF& pdf, double priority);
 
@@ -44,27 +44,26 @@ protected:
 
         std::vector<PDF*> pdfs_;
 
-		int n_ptrs_;
+        int n_ptrs_;
 
-        HybridStruct() : n_ptrs_(1) { }
+        HybridStruct() : n_ptrs_(1) {}
 
         HybridStruct(const HybridStruct& orig) : n_ptrs_(1) {
-
             for (std::vector<PDF*>::const_iterator it_pdf = orig.pdfs_.begin(); it_pdf != orig.pdfs_.end(); ++it_pdf) {
                 pdfs_.push_back((*it_pdf)->clone());
-			}
-		}
+            }
+        }
 
         ~HybridStruct() {
             for (std::vector<PDF*>::const_iterator it_pdf = pdfs_.begin(); it_pdf != pdfs_.end(); ++it_pdf) {
-				delete *it_pdf;
-			}
-		}
-	};
+                delete *it_pdf;
+            }
+        }
+    };
 
     HybridStruct* ptr_;
 
-	void cloneStruct();
+    void cloneStruct();
 
 };
 
