@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
-<package>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>wire</name>
   <version>0.0.1</version>
-  <description>The wire meta package is implements a framework that 
-     generates and maintains one consistent world state estimate based 
-     on object detections. It solves the data association problem by 
+  <description>The wire meta package is implements a framework that
+     generates and maintains one consistent world state estimate based
+     on object detections. It solves the data association problem by
      maintaining multiple hypotheses and facilitates tracking of various
      object attributes. The state estimators used for estimation and the
      probabilistic models used for association can be configured.
@@ -17,29 +20,28 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <!-- Wrapper around matrix library -->
-  <run_depend>armadillo_matrix</run_depend>
+  <exec_depend>armadillo_matrix</exec_depend>
 
   <!-- Library for probabilistic data and computations -->
-  <run_depend>problib</run_depend>
+  <exec_depend>problib</exec_depend>
 
   <!-- Wire core -->
-  <run_depend>wire_core</run_depend>
+  <exec_depend>wire_core</exec_depend>
 
   <!-- World messages for interacting with the world model -->
-  <run_depend>wire_msgs</run_depend>
-  
+  <exec_depend>wire_msgs</exec_depend>
+
   <!-- Wire state estimators -->
-  <run_depend>wire_state_estimators</run_depend>
-  
+  <exec_depend>wire_state_estimators</exec_depend>
+
   <!-- Wire visualization -->
-  <run_depend>wire_viz</run_depend>
-  
+  <exec_depend>wire_viz</exec_depend>
+
   <!-- Wire tutorials -->
-  <run_depend>wire_tutorials</run_depend>
+  <exec_depend>wire_tutorials</exec_depend>
 
   <export>
     <metapackage />
   </export>
 
 </package>
-
