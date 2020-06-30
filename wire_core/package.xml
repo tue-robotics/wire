@@ -1,28 +1,27 @@
-<package>
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>wire_core</name>
   <version>0.0.1</version>
   <description>
      wire_core
   </description>
-  <maintainer email="j.elfring@tue.nl">Sjoerd van den Dries, Jos Elfring</maintainer>
+  <maintainer email="j.elfring@tue.nl">Jos Elfring</maintainer>
+  <author>Sjoerd van den Dries, Jos Elfring</author>
   <license>TODO</license>
   <buildtool_depend>catkin</buildtool_depend>
-  
-  <build_depend>roscpp</build_depend>
-  <build_depend>tf</build_depend>
-  <build_depend>wire_msgs</build_depend>
-  <build_depend>pluginlib</build_depend>
-  <build_depend>problib</build_depend>
-  <build_depend>std_srvs</build_depend>
-  <build_depend>cmake_modules</build_depend> <!-- for tinyxml -->
-  
-  <run_depend>roscpp</run_depend>
-  <run_depend>tf</run_depend>
-  <run_depend>wire_msgs</run_depend>
-  <run_depend>pluginlib</run_depend>
-  <run_depend>problib</run_depend>
-  <run_depend>std_srvs</run_depend>
+
+  <build_depend>cmake_modules</build_depend><!-- for tinyxml -->
+
+  <depend>pluginlib</depend>
+  <depend>problib</depend>
+  <depend>roscpp</depend>
+  <depend>std_srvs</depend>
+  <depend>tf</depend>
+  <depend>tinyxml</depend>
+  <depend>wire_msgs</depend>
 
 </package>
-
 
