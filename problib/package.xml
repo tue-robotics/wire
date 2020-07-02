@@ -17,6 +17,7 @@
 
   <build_depend>message_generation</build_depend>
 
+  <depend>armadillo</depend>
   <depend>roscpp</depend>
   <depend>std_msgs</depend>
 
