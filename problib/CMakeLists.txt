@@ -8,7 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
   armadillo_matrix
-  std_msgs
 )
 
 # Generate messages in the 'msg' folder
@@ -18,7 +17,7 @@ add_message_files(
 )
 
 generate_messages(
-  DEPENDENCIES std_msgs
+  DEPENDENCIES
 )
 
 ## The catkin_package macro generates cmake config files for your package
@@ -30,7 +29,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES problib
-  CATKIN_DEPENDS message_runtime armadillo_matrix std_msgs
+  CATKIN_DEPENDS message_runtime armadillo_matrix
 #  DEPENDS system_lib
 )
 
