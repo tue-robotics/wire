@@ -15,12 +15,13 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <depend>roscpp</depend>
+  <depend>armadillo_matrix</depend>>
+
   <build_depend>message_generation</build_depend>
 
-  <depend>roscpp</depend>
-  <depend>armadillo_matrix</depend>
-  <depend>std_msgs</depend>
-
+  <build_export_depend>message_runtime</build_export_depend>
   <exec_depend>message_runtime</exec_depend>
+
 
 </package>
