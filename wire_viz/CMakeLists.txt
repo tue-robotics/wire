@@ -11,9 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   problib
   geometry_msgs
+  std_msgs
 )
 
-# Declare a catkin package                                                                                                                                
+# Declare a catkin package
 catkin_package(
   INCLUDE_DIRS
     include
@@ -24,6 +25,7 @@ catkin_package(
     visualization_msgs
     problib
     geometry_msgs
+    std_msgs
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -39,5 +41,5 @@ add_library(wire_viz
 target_link_libraries(wire_viz ${catkin_LIBRARIES})
 
 # ROS nodes
-add_executable(visualization src/visualization.cpp) 
+add_executable(visualization src/visualization.cpp)
 target_link_libraries(visualization wire_viz)
