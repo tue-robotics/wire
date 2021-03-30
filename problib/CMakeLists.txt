@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(problib)
 
 ## Find catkin macros and libraries
@@ -7,7 +7,6 @@ project(problib)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
-  std_msgs
 )
 find_package(Armadillo REQUIRED)
 
@@ -18,7 +17,7 @@ add_message_files(
 )
 
 generate_messages(
-  DEPENDENCIES std_msgs
+  DEPENDENCIES
 )
 
 ## The catkin_package macro generates cmake config files for your package
@@ -30,7 +29,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES problib
-  CATKIN_DEPENDS message_runtime std_msgs
+  CATKIN_DEPENDS message_runtime
   DEPENDS ARMADILLO
 )
 
