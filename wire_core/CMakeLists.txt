@@ -14,8 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
   cmake_modules
 )
 
-# TinyXML
-find_package(TinyXML REQUIRED)
+# TinyXML2
+find_package(TinyXML2 REQUIRED)
 
 # Declare a catkin package                                                                                                                                
 catkin_package(
@@ -29,10 +29,10 @@ catkin_package(
     problib
     std_srvs
   DEPENDS
-    TinyXML
+    TinyXML2
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
 
 ## Build
 add_compile_options(-std=c++0x) # C++ 11
@@ -77,7 +77,7 @@ add_library(wire
     
 )
 
-target_link_libraries(wire ${catkin_LIBRARIES} ${TinyXML_LIBRARIES})
+target_link_libraries(wire ${catkin_LIBRARIES} ${TinyXML2_LIBRARIES})
 
 # ROS nodes
 add_executable(wire_server src/world_model.cpp) 

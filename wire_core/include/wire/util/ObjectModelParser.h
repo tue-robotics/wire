@@ -11,7 +11,7 @@
 #include "wire/core/IStateEstimator.h"
 
 // xml parser
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include <pluginlib/class_loader.h>
 
@@ -42,19 +42,19 @@ protected:
 
     pluginlib::ClassLoader<IStateEstimator>* object_model_loader_;
 
-    std::string getPropertyValue(const TiXmlElement* elem, std::string prop_name, double& value, std::stringstream& error, bool optional = false);
+    std::string getPropertyValue(const tinyxml2::XMLElement* elem, std::string prop_name, double& value, std::stringstream& error, bool optional = false);
 
-    bool getAttributeValue(const TiXmlElement* elem, std::string att_name, std::string& att_value, std::stringstream& error);
+    bool getAttributeValue(const tinyxml2::XMLElement* elem, std::string att_name, std::string& att_value, std::stringstream& error);
 
-    bool getAttributeValue(const TiXmlElement* elem, std::string att_name, double& att_value, std::stringstream& error);
+    bool getAttributeValue(const tinyxml2::XMLElement* elem, std::string att_name, double& att_value, std::stringstream& error);
 
-    bool hasAttributeValue(const TiXmlElement* elem, std::string att_name, std::string att_value);
+    bool hasAttributeValue(const tinyxml2::XMLElement* elem, std::string att_name, std::string att_value);
 
-    bool parseStateEstimator(ClassModel* obj_model, const TiXmlElement* elem, std::stringstream& error);
+    bool parseStateEstimator(ClassModel* obj_model, const tinyxml2::XMLElement* elem, std::stringstream& error);
 
-    pbl::PDF* parsePDF(const TiXmlElement* elem, std::stringstream& error);
+    pbl::PDF* parsePDF(const tinyxml2::XMLElement* elem, std::stringstream& error);
 
-    bool getStateEstimatorParameter(const TiXmlElement* elem, const std::string& param_name, double& value);
+    bool getStateEstimatorParameter(const tinyxml2::XMLElement* elem, const std::string& param_name, double& value);
 
 };
 
