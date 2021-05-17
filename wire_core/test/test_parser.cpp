@@ -8,9 +8,9 @@
 
 TEST(ObjectModelParser, parse){
     std::string path = ros::package::getPath("wire_core");
-    path += "/models/world_object_models.xml";
+    path += "/test/test_world_object_models.xml";
     std::cout << "Parsing: " << path << std::endl;
-    mhf::ObjectModelParser parser(path);
+    mhf::ObjectModelParser parser(path, "plugin_test");
 
     ASSERT_TRUE(parser.parse(mhf::KnowledgeDatabase::getInstance())) << parser.getErrorMessage();
 }
