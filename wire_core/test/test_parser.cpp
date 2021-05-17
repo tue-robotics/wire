@@ -9,9 +9,10 @@
 TEST(ObjectModelParser, parse){
     std::string path = ros::package::getPath("wire_core");
     path += "/models/world_object_models.xml";
+    std::cout << "Parsing: " << path << std::endl;
     mhf::ObjectModelParser parser(path);
 
-    ASSERT_TRUE(parser.parse(mhf::KnowledgeDatabase::getInstance()));
+    ASSERT_TRUE(parser.parse(mhf::KnowledgeDatabase::getInstance())) << parser.getErrorMessage();
 }
 
 int main(int argc, char **argv){
