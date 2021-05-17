@@ -85,3 +85,8 @@ target_link_libraries(wire_server wire)
 
 add_executable(dummy_publisher src/dummy_evidence_publisher.cpp) 
 target_link_libraries(dummy_publisher wire)
+
+if(CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(test_parser test/test_parser.cpp)
+  target_link_libraries(test_parser wire)
+endif()
