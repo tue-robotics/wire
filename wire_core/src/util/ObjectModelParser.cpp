@@ -57,13 +57,13 @@ bool ObjectModelParser::getAttributeValue(const tinyxml2::XMLElement* elem, stri
 bool ObjectModelParser::getAttributeValue(const tinyxml2::XMLElement* elem, string att_name, double& att_value, std::stringstream& error) {
     if (!elem) return false;
 
-    const char* value = elem->Attribute(att_name.c_str(), std::to_string(att_value).c_str());
-
+    const char* value = elem->Attribute(att_name.c_str());
     if (!value) {
         error << "Could not find attribute '" << att_name << "' of element '" << elem->Value() << "'" << endl;
         return false;
     }
 
+    att_value = std::atof(value);
     return true;
 }
 
