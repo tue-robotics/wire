@@ -122,7 +122,7 @@ void PositionFilter::update(const pbl::PDF& z, const mhf::Time& time) {
             kalman_filter_->update(*G);
         }
     } else {
-        printf("PositionFilter can only be updated with Gaussians.\n");
+        std::cout << "PositionFilter can only be updated with Gaussians, not with " << z.type() << std::endl;
     }
 }
 
