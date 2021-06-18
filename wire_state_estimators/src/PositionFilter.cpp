@@ -37,12 +37,12 @@
 #include "PositionFilter.h"
 #include "KalmanFilter.h"
 
-PositionFilter::PositionFilter() : t_last_update_(0), t_last_propagation_(0), kalman_filter_(0),
-    fixed_pdf_(0), max_acceleration_(0), fixed_pdf_cov_(0), kalman_timeout_(0) {
+PositionFilter::PositionFilter() : t_last_update_(0), t_last_propagation_(0), kalman_filter_(nullptr),
+    fixed_pdf_(nullptr), max_acceleration_(0), fixed_pdf_cov_(0), kalman_timeout_(0) {
 }
 
 PositionFilter::PositionFilter(const PositionFilter& orig) : mhf::IStateEstimator(orig), t_last_update_(orig.t_last_update_),
-    t_last_propagation_(orig.t_last_propagation_), kalman_filter_(0), fixed_pdf_(0), max_acceleration_(orig.max_acceleration_),
+    t_last_propagation_(orig.t_last_propagation_), kalman_filter_(nullptr), fixed_pdf_(nullptr), max_acceleration_(orig.max_acceleration_),
     fixed_pdf_cov_(orig.fixed_pdf_cov_ ), kalman_timeout_(orig.kalman_timeout_) {
 
     if (orig.fixed_pdf_) {
@@ -55,8 +55,10 @@ PositionFilter::PositionFilter(const PositionFilter& orig) : mhf::IStateEstimato
 }
 
 PositionFilter::~PositionFilter() {
-    delete kalman_filter_;
-    delete fixed_pdf_;
+    if (kalman_filter_)
+        delete kalman_filter_;
+    if (fixed_pdf_)
+        delete fixed_pdf_;
 }
 
 PositionFilter* PositionFilter::clone() const {
@@ -88,6 +90,7 @@ void PositionFilter::propagate(const mhf::Time& time) {
             fixed_pdf_->setMean(kalman_filter_->getGaussian().getMean());
         }
 
+        // kalman_filter_ has been checked before, so it isn't a nullptr
         delete kalman_filter_;
         kalman_filter_ = 0;
         return;
@@ -127,11 +130,15 @@ void PositionFilter::update(const pbl::PDF& z, const mhf::Time& time) {
 }
 
 void PositionFilter::reset() {
-    delete kalman_filter_;
-    kalman_filter_ = 0;
+    if (kalman_filter_) {
+        delete kalman_filter_;
+        kalman_filter_ = nullptr;
+    }
 
-    delete fixed_pdf_;
-    fixed_pdf_ = 0;
+    if (fixed_pdf_) {
+        delete fixed_pdf_;
+        fixed_pdf_ = nullptr;
+    }
 }
 
 const pbl::PDF& PositionFilter::getValue() const {
@@ -141,7 +148,7 @@ const pbl::PDF& PositionFilter::getValue() const {
         return *fixed_pdf_;
     }
 
-    std::cout << "SOMETHINGS WRONG" << std::endl;
+    throw std::runtime_error("Couldn't get a value");
 }
 
 bool PositionFilter::setParameter(const std::string& /*param*/, bool /*b*/) {
