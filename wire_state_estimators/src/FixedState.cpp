@@ -43,11 +43,14 @@ FixedState::FixedState() {
 FixedState::FixedState(const pbl::PDF& pdf) : pdf_(pdf.clone()) {
 }
 
-FixedState::FixedState(const FixedState& orig) : mhf::IStateEstimator(orig), pdf_(orig.pdf_->clone()) {
+FixedState::FixedState(const FixedState& orig) : mhf::IStateEstimator(orig), pdf_(nullptr) {
+    if (orig.pdf_)
+        pdf_ = orig.pdf_->clone();
 }
 
 FixedState::~FixedState() {
-	delete pdf_;
+    if (pdf_)
+        delete pdf_;
 }
 
 FixedState* FixedState::clone() const {
