@@ -51,13 +51,13 @@ FixedState::~FixedState() {
 }
 
 FixedState* FixedState::clone() const {
-	return new FixedState(*this);
+    return new FixedState(*this);
 }
 
-void FixedState::update(const pbl::PDF& z, const mhf::Time& time) {
+void FixedState::update(const pbl::PDF& /*z*/, const mhf::Time& /*time*/) {
 }
 
-void FixedState::propagate(const mhf::Time& time) {
+void FixedState::propagate(const mhf::Time& /*time*/) {
 }
 
 void FixedState::reset() {

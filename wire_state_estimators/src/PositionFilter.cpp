@@ -144,7 +144,7 @@ const pbl::PDF& PositionFilter::getValue() const {
     std::cout << "SOMETHINGS WRONG" << std::endl;
 }
 
-bool PositionFilter::setParameter(const std::string& param, bool b) {
+bool PositionFilter::setParameter(const std::string& /*param*/, bool /*b*/) {
     return false;
 }
 
