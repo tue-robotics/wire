@@ -281,7 +281,7 @@ void HypothesisTree::normalizeProbabilities() {
     root_->calculateBranchProbabilities();
 }
 
-void HypothesisTree::pruneTree(const Time& timestamp) {
+void HypothesisTree::pruneTree(const Time& /*timestamp*/) {
     //return;
 
 
