@@ -23,5 +23,9 @@
   <depend>tinyxml2</depend>
   <depend>wire_msgs</depend>
 
+<export>
+    <wire_core plugin_test="${prefix}/test/test_plugins.xml" />
+  </export>
+
 </package>
 

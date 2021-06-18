@@ -1,5 +1,5 @@
 /************************************************************************
- *  Copyright (C) 2012 Eindhoven University of Technology (TU/e).       *
+ *  Copyright (C) 2021 Eindhoven University of Technology (TU/e).       *
  *  All rights reserved.                                                *
  ************************************************************************
  *  Redistribution and use in source and binary forms, with or without  *
@@ -34,41 +34,70 @@
  *  implied, of TU/e.                                                   *
  ************************************************************************/
 
-#include "FixedState.h"
+#include "test_plugin.h"
 
-FixedState::FixedState() {
-
+TestPlugin::TestPlugin() : pdf_(nullptr), bool_param_(false), double_param_(0), string_param_() {
 }
 
-FixedState::FixedState(const pbl::PDF& pdf) : pdf_(pdf.clone()) {
+TestPlugin::TestPlugin(const pbl::PDF& pdf) : pdf_(pdf.clone()) {
 }
 
-FixedState::FixedState(const FixedState& orig) : mhf::IStateEstimator(orig), pdf_(nullptr) {
-    if (orig.pdf_)
+TestPlugin::TestPlugin(const TestPlugin& orig) : mhf::IStateEstimator(orig), pdf_(nullptr),
+    bool_param_(orig.bool_param_), double_param_(orig.double_param_), string_param_(orig.string_param_) {
+
+    if (orig.pdf_) {
         pdf_ = orig.pdf_->clone();
+    }
 }
 
-FixedState::~FixedState() {
+TestPlugin::~TestPlugin() {
     if (pdf_)
         delete pdf_;
 }
 
-FixedState* FixedState::clone() const {
-    return new FixedState(*this);
+TestPlugin* TestPlugin::clone() const {
+    return new TestPlugin(*this);
 }
 
-void FixedState::update(const pbl::PDF& /*z*/, const mhf::Time& /*time*/) {
+void TestPlugin::update(const pbl::PDF& /*z*/, const mhf::Time& /*time*/) {
 }
 
-void FixedState::propagate(const mhf::Time& /*time*/) {
+void TestPlugin::propagate(const mhf::Time& /*time*/) {
 }
 
-void FixedState::reset() {
+void TestPlugin::reset() {
 }
 
-const pbl::PDF& FixedState::getValue() const {
-	return *pdf_;
+const pbl::PDF& TestPlugin::getValue() const {
+    return *pdf_;
+}
+
+bool TestPlugin::setParameter(const std::string& param, bool b) {
+    if (param == "bool_param") {
+        bool_param_ = b;
+    } else {
+        return false;
+    }
+    return true;
+}
+
+bool TestPlugin::setParameter(const std::string &param, double v) {
+    if (param == "double_param") {
+        double_param_ = v;
+    } else {
+        return false;
+    }
+    return true;
+}
+
+bool TestPlugin::setParameter(const std::string& param, const std::string& s) {
+    if (param == "string_param") {
+        string_param_ = s;
+    } else {
+        return false;
+    }
+    return true;
 }
 
 #include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS( FixedState, mhf::IStateEstimator )
+PLUGINLIB_EXPORT_CLASS( TestPlugin, mhf::IStateEstimator )
