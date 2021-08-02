@@ -10,7 +10,7 @@
 
 namespace mhf {
 
-Property::Property(const Attribute& attribute, const IStateEstimator& bm, const ObjectID& object_id)
+Property::Property(const Attribute& attribute, const IStateEstimator& bm, const ObjectID& /*object_id*/)
     : time_(0), attribute_(attribute), estimator_(bm.clone()) {
 }
 
@@ -69,7 +69,7 @@ double Property::getLikelihood(const pbl::PDF& pdf) const {
     return estimator_->getValue().getLikelihood(pdf);
 }
 
-std::string Property::toString(const std::string& prefix) const {
+std::string Property::toString(const std::string& /*prefix*/) const {
     return estimator_->getValue().toString();
 }
 

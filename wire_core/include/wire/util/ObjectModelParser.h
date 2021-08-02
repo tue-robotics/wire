@@ -26,7 +26,7 @@ class ObjectModelParser {
 
 public:
 
-    ObjectModelParser(const std::string& filename);
+    ObjectModelParser(const std::string& filename, const std::string& plugin_attr="plugin");
 
     virtual ~ObjectModelParser();
 
