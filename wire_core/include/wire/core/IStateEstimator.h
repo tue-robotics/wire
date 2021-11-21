@@ -103,7 +103,7 @@ public:
      * @param b The boolean value
      * @return Returns true if the parameter was known to the estimator; false otherwise
      */
-    virtual bool setParameter(const std::string& param, bool b) {
+    virtual bool setParameter(const std::string& /*param*/, bool /*b*/) {
         return false;
     }
 
@@ -113,7 +113,7 @@ public:
      * @param v The float value
      * @return Returns true if the parameter was known to the estimator; false otherwise
      */
-    virtual bool setParameter(const std::string& param, double v) {
+    virtual bool setParameter(const std::string& /*param*/, double /*v*/) {
         return false;
     }
 
@@ -123,7 +123,7 @@ public:
      * @param s The string value
      * @return Returns true if the parameter was known to the estimator; false otherwise
      */
-    virtual bool setParameter(const std::string& param, const std::string& s) {
+    virtual bool setParameter(const std::string& /*param*/, const std::string& /*s*/) {
         return false;
     }
 };

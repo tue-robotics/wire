@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<library path="lib/libtest_plugin">
+  <class name="wire_core/Test" type="TestPlugin" base_class_type="IStateEstimator">
+    <description>This is a test plugin.</description>
+  </class>
+</library>
