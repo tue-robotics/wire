@@ -54,10 +54,10 @@ DiscreteFilter* DiscreteFilter::clone() const {
 	return new DiscreteFilter(*this);
 }
 
-void DiscreteFilter::propagate(const mhf::Time& time) {
+void DiscreteFilter::propagate(const mhf::Time& /*time*/) {
 }
 
-void DiscreteFilter::update(const pbl::PDF& z, const mhf::Time& time) {
+void DiscreteFilter::update(const pbl::PDF& z, const mhf::Time& /*time*/) {
 	assert(z.type() == pbl::PDF::DISCRETE);
 	const pbl::PMF* pmf = pbl::PDFtoPMF(z);
 	pmf_.update(*pmf);

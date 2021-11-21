@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(wire_core)
 
 ## Find catkin macros and libraries
@@ -14,8 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
   cmake_modules
 )
 
-# TinyXML
-find_package(TinyXML REQUIRED)
+# TinyXML2
+find_package(TinyXML2 REQUIRED)
 
 # Declare a catkin package                                                                                                                                
 catkin_package(
@@ -29,14 +29,14 @@ catkin_package(
     problib
     std_srvs
   DEPENDS
-    TinyXML
+    TinyXML2
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
 
 ## Build
-add_compile_options(-std=c++0x) # C++ 11
 add_compile_options(-Wreturn-type) # Return type checking
+add_compile_options(-Wreorder)
 
 
 add_library(wire
@@ -77,7 +77,7 @@ add_library(wire
     
 )
 
-target_link_libraries(wire ${catkin_LIBRARIES} ${TinyXML_LIBRARIES})
+target_link_libraries(wire ${catkin_LIBRARIES} ${TinyXML2_LIBRARIES})
 
 # ROS nodes
 add_executable(wire_server src/world_model.cpp) 
@@ -85,3 +85,12 @@ target_link_libraries(wire_server wire)
 
 add_executable(dummy_publisher src/dummy_evidence_publisher.cpp) 
 target_link_libraries(dummy_publisher wire)
+
+if(CATKIN_ENABLE_TESTING)
+  add_library(test_plugin EXCLUDE_FROM_ALL SHARED test/test_plugin.cpp)
+  target_link_libraries(test_plugin wire)
+
+  catkin_add_gtest(test_parser test/test_parser.cpp)
+  target_link_libraries(test_parser wire)
+  add_dependencies(test_parser test_plugin)
+endif()

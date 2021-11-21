@@ -18,6 +18,7 @@
   <depend>geometry_msgs</depend>
   <depend>problib</depend>
   <depend>roscpp</depend>
+  <depend>std_msgs</depend>
   <depend>tf</depend>
   <depend>visualization_msgs</depend>
   <depend>wire_msgs</depend>

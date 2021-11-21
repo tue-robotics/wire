@@ -1,8 +1,5 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(wire_state_estimators)
-
-## Compile as C++11
-add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -38,4 +35,3 @@ target_link_libraries(position_estimatorTW_Unif ${catkin_LIBRARIES}) # Added by 
 target_link_libraries(multimodel_estimator ${catkin_LIBRARIES})
 target_link_libraries(discrete_estimator ${catkin_LIBRARIES})
 target_link_libraries(fixed_estimator ${catkin_LIBRARIES})
-

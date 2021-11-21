@@ -292,9 +292,8 @@ namespace mhf {
         root_->calculateBranchProbabilities();
     }
 
-    void HypothesisTree::pruneTree(const Time &timestamp) {
+    void HypothesisTree::pruneTree(const Time& /*timestamp*/) {
         //return;
-
 
         DEBUG_INFO("pruneTree - begin\n");
 

@@ -12,12 +12,10 @@
 #include <problib/pdfs/Uniform.h>
 #include <problib/pdfs/PMF.h>
 
-using namespace std;
-
 namespace mhf {
 
-ObjectModelParser::ObjectModelParser(const std::string& filename) : filename_(filename),
-    object_model_loader_(new pluginlib::ClassLoader<IStateEstimator>("wire_core", "IStateEstimator")) {
+ObjectModelParser::ObjectModelParser(const std::string& filename, const std::string& plugin_attr) : filename_(filename),
+    object_model_loader_(new pluginlib::ClassLoader<IStateEstimator>("wire_core", "IStateEstimator", plugin_attr)) {
 
 }
 
@@ -30,23 +28,23 @@ std::string ObjectModelParser::getErrorMessage() const {
     return parse_errors_.str();
 }
 
-string ObjectModelParser::getPropertyValue(const TiXmlElement* elem, string prop_name, double& value, std::stringstream& error, bool optional) {
-    const TiXmlElement* p = elem->FirstChildElement(prop_name);
+std::string ObjectModelParser::getPropertyValue(const tinyxml2::XMLElement* elem, std::string prop_name, double& value, std::stringstream& error, bool optional) {
+    const tinyxml2::XMLElement* p = elem->FirstChildElement(prop_name.c_str());
     if (p) {
-        return p->Attribute("value", &value);
+        return p->Attribute("value", std::to_string(value).c_str());
     }
     if (!optional) {
-        error << "Could not find property '" << prop_name << "' of element '" << elem->Value() << "'" << endl;
+        error << "Could not find property '" << prop_name << "' of element '" << elem->Value() << "'" << std::endl;
     }
     return "";
 }
 
-bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_name, string& att_value, std::stringstream& error) {
+bool ObjectModelParser::getAttributeValue(const tinyxml2::XMLElement* elem, std::string att_name, std::string& att_value, std::stringstream& error) {
     if (!elem) return false;
 
     const char* value = elem->Attribute(att_name.c_str());
     if (!value) {
-        error << "Could not find attribute '" << att_name << "' of element '" << elem->Value() << "'" << endl;
+        error << "Could not find attribute '" << att_name << "' of element '" << elem->Value() << "'" << std::endl;
         return false;
     }
 
@@ -54,57 +52,57 @@ bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_n
     return true;
 }
 
-bool ObjectModelParser::getAttributeValue(const TiXmlElement* elem, string att_name, double& att_value, std::stringstream& error) {
+bool ObjectModelParser::getAttributeValue(const tinyxml2::XMLElement* elem, std::string att_name, double& att_value, std::stringstream& error) {
     if (!elem) return false;
 
-    const char* value = elem->Attribute(att_name.c_str(), &att_value);
-
+    const char* value = elem->Attribute(att_name.c_str());
     if (!value) {
-        error << "Could not find attribute '" << att_name << "' of element '" << elem->Value() << "'" << endl;
+        error << "Could not find attribute '" << att_name << "' of element '" << elem->Value() << "'" << std::endl;
         return false;
     }
 
+    att_value = std::atof(value);
     return true;
 }
 
-bool ObjectModelParser::hasAttributeValue(const TiXmlElement* elem, string att_name, string att_value) {
+bool ObjectModelParser::hasAttributeValue(const tinyxml2::XMLElement* elem, std::string att_name, std::string att_value) {
     if (!elem) return false;
 
     const char* value = elem->Attribute(att_name.c_str());
     if (!value) return false;
 
-    string valueStr = value;
+    std::string valueStr = value;
     return (att_value == valueStr);
 }
 
-pbl::PDF* ObjectModelParser::parsePDF(const TiXmlElement* pdf_elem, std::stringstream& error) {
+pbl::PDF* ObjectModelParser::parsePDF(const tinyxml2::XMLElement* pdf_elem, std::stringstream& error) {
     const char* pdf_type = pdf_elem->Attribute("type");
     if (pdf_type) {
-        if (string(pdf_type) == "uniform") {
+        if (std::string(pdf_type) == "uniform") {
             double dim = 0;
             double density = 0;
             if (getAttributeValue(pdf_elem, "dimensions", dim, error)
                     && getAttributeValue(pdf_elem, "density", density, error)) {
                 return new pbl::Uniform((int)dim, density);
             }
-        } else if (string(pdf_type) == "discrete") {
+        } else if (std::string(pdf_type) == "discrete") {
             double domain_size;
             if (getAttributeValue(pdf_elem, "domain_size", domain_size, error)) {
                 return new pbl::PMF((int)domain_size);
             }
         } else {
-            error << "Unknown pdf type: " << pdf_type << endl;
+            error << "Unknown pdf type: " << pdf_type << std::endl;
         }
     } else {
-        error << "PDF specification should contain 'type' attribute" << endl;
+        error << "PDF specification should contain 'type' attribute" << std::endl;
     }
     return 0;
 }
 
-bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlElement* elem, std::stringstream& error) {
+bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const tinyxml2::XMLElement* elem, std::stringstream& error) {
 
     // check behavior model's attribute and model type
-    string attribute_name, model_type;
+    std::string attribute_name, model_type;
     if (!getAttributeValue(elem, "attribute", attribute_name, error)
             | !getAttributeValue(elem, "model", model_type, error)) {
         return false;
@@ -128,14 +126,14 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
     IStateEstimator* estimator;
 
     if (object_model_loader_->isClassAvailable(model_type)) {
-        estimator = object_model_loader_->createClassInstance(model_type)->clone();
+        estimator = object_model_loader_->createUnmanagedInstance(model_type)->clone();
     } else {
-        error << "Unknown model: " << model_type << endl;
+        error << "Unknown model: " << model_type << std::endl;
         return false;
     }
 
     // set estimator parameters
-    const TiXmlElement* param = elem->FirstChildElement("param");
+    const tinyxml2::XMLElement* param = elem->FirstChildElement("param");
     while (param) {
         const char* param_name = param->Attribute("name");
 
@@ -145,33 +143,33 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
             double v_double;
 
             bool set_param_ok = true;
-            if (param->QueryDoubleAttribute("value", &v_double) == TIXML_SUCCESS) {
-                set_param_ok = estimator->setParameter(string(param_name), v_double);
-            } else if (param->QueryIntAttribute("value", &v_int) == TIXML_SUCCESS) {
-                set_param_ok = estimator->setParameter(string(param_name), (double)v_int);
-            } else if (param->QueryBoolAttribute("value", &v_bool) == TIXML_SUCCESS) {
-                set_param_ok = estimator->setParameter(string(param_name), v_bool);
+            if (param->QueryDoubleAttribute("value", &v_double) == tinyxml2::XML_SUCCESS) {
+                set_param_ok = estimator->setParameter(std::string(param_name), v_double);
+            } else if (param->QueryIntAttribute("value", &v_int) == tinyxml2::XML_SUCCESS) {
+                set_param_ok = estimator->setParameter(std::string(param_name), (double)v_int);
+            } else if (param->QueryBoolAttribute("value", &v_bool) == tinyxml2::XML_SUCCESS) {
+                set_param_ok = estimator->setParameter(std::string(param_name), v_bool);
             } else {
                 const char* v_str = param->Attribute("value");
                 if (v_str) {
-                    set_param_ok = estimator->setParameter(string(param_name), string(v_str));
+                    set_param_ok = estimator->setParameter(std::string(param_name), std::string(v_str));
                 } else {
-                    error << "State estimator parameters should always have a 'name' and 'value' attribute." << endl;
+                    error << "State estimator parameters should always have a 'name' and 'value' attribute." << std::endl;
                 }
             }
 
             if (!set_param_ok) {
-                error << "Unknown parameter for estimator '" << model_type << "': " << param_name << endl;
+                error << "Unknown parameter for estimator '" << model_type << "': " << param_name << std::endl;
             }
 
         } else {
-            error << "State estimator parameters should always have a 'name' and 'value' attribute." << endl;
+            error << "State estimator parameters should always have a 'name' and 'value' attribute." << std::endl;
         }
 
         param = param->NextSiblingElement("param");
     }
 
-    const TiXmlElement* pnew = elem->FirstChildElement("pnew");
+    const tinyxml2::XMLElement* pnew = elem->FirstChildElement("pnew");
     if (pnew) {
         pbl::PDF* pdf_new = parsePDF(pnew, error);
         if (pdf_new) {
@@ -184,11 +182,11 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
             return false;
         }
     } else {
-        error << "Estimator specification does not contain 'pnew'." << endl;
+        error << "Estimator specification does not contain 'pnew'." << std::endl;
         return false;
     }
 
-    const TiXmlElement* pclutter = elem->FirstChildElement("pclutter");
+    const tinyxml2::XMLElement* pclutter = elem->FirstChildElement("pclutter");
     if (pclutter) {
         pbl::PDF* pdf_clutter = parsePDF(pclutter, error);
         if (pdf_clutter) {
@@ -199,7 +197,7 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
             return false;
         }
     } else {
-        error << "Estimator specification does not contain 'pclutter'." << endl;
+        error << "Estimator specification does not contain 'pclutter'." << std::endl;
         return false;
     }
 
@@ -208,13 +206,13 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const TiXmlEl
     return true;
 }
 
-bool ObjectModelParser::getStateEstimatorParameter(const TiXmlElement* elem, const string& param_name, double& value) {
+bool ObjectModelParser::getStateEstimatorParameter(const tinyxml2::XMLElement* elem, const std::string& param_name, double& value) {
 
-    const TiXmlElement* param = elem->FirstChildElement("param");
+    const tinyxml2::XMLElement* param = elem->FirstChildElement("param");
     while (param) {
         const char* v = param->Attribute("name");
-        if (v && (string)v == param_name) {
-            param->Attribute("value", &value);
+        if (v && (std::string)v == param_name) {
+            param->Attribute("value", std::to_string(value).c_str());
             return true;
         }
         param = param->NextSiblingElement("param");
@@ -225,60 +223,60 @@ bool ObjectModelParser::getStateEstimatorParameter(const TiXmlElement* elem, con
 
 bool ObjectModelParser::parse(KnowledgeDatabase& knowledge_db) {
 
-    TiXmlDocument doc(filename_);
-    doc.LoadFile();
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(filename_.c_str());
 
     if (doc.Error()) {
-        ROS_ERROR_STREAM("While parsing '" << filename_ << "': " << endl << endl << doc.ErrorDesc() << " at line " << doc.ErrorRow() << ", col " << doc.ErrorCol());
+        ROS_ERROR_STREAM("While parsing '" << filename_ << "': " << std::endl << std::endl << doc.ErrorStr() << " at line " << doc.ErrorLineNum());
         return false;
     }
 
-    const TiXmlElement* root = doc.RootElement();
+    const tinyxml2::XMLElement* root = doc.RootElement();
 
     double prior_new;
-    const TiXmlElement* prior_new_elem = root->FirstChildElement("prior_new");
+    const tinyxml2::XMLElement* prior_new_elem = root->FirstChildElement("prior_new");
     if (prior_new_elem) {
         if (getAttributeValue(prior_new_elem, "value", prior_new, parse_errors_)) {
             knowledge_db.setPriorNew(prior_new);
         }
     } else {
-        parse_errors_ << "Knowledge file does not contain 'prior_new'" << endl;
+        parse_errors_ << "Knowledge file does not contain 'prior_new'" << std::endl;
     }
 
     double prior_existing;
-    const TiXmlElement* prior_existing_elem = root->FirstChildElement("prior_existing");
+    const tinyxml2::XMLElement* prior_existing_elem = root->FirstChildElement("prior_existing");
     if (prior_existing_elem) {
         if (getAttributeValue(prior_existing_elem, "value", prior_existing, parse_errors_)) {
             knowledge_db.setPriorExisting(prior_existing);
         }
     } else {
-        parse_errors_ << "Knowledge file does not contain 'prior_existing'" << endl;
+        parse_errors_ << "Knowledge file does not contain 'prior_existing'" << std::endl;
     }
 
     double prior_clutter;
-    const TiXmlElement* prior_clutter_elem = root->FirstChildElement("prior_clutter");
+    const tinyxml2::XMLElement* prior_clutter_elem = root->FirstChildElement("prior_clutter");
     if (prior_clutter_elem) {
         if (getAttributeValue(prior_clutter_elem, "value", prior_clutter, parse_errors_)) {
             knowledge_db.setPriorClutter(prior_clutter);
         }
     } else {
-        parse_errors_ << "Knowledge file does not contain 'prior_clutter'" << endl;
+        parse_errors_ << "Knowledge file does not contain 'prior_clutter'" << std::endl;
     }
 
 
-    const TiXmlElement* class_element = root->FirstChildElement("object_class");
+    const tinyxml2::XMLElement* class_element = root->FirstChildElement("object_class");
 
     /* PARSE ALL OBJECT MODELS */
 
     while(class_element) {
         ClassModel* class_model = 0;
 
-        string model_name;
+        std::string model_name;
         getAttributeValue(class_element, "name", model_name, parse_errors_);
 
-        cout << "Parsing model for class " << model_name << endl;
+        std::cout << "Parsing model for class " << model_name << std::endl;
 
-        string base_class = "";
+        std::string base_class = "";
         const char* value = class_element->Attribute("base");
 
         if (value) {
@@ -290,7 +288,7 @@ bool ObjectModelParser::parse(KnowledgeDatabase& knowledge_db) {
                 class_model = new ClassModel(*base_model);
                 class_model->setModelName(model_name);
             } else {
-                parse_errors_ << "Error in class definition of '" << model_name << "': unknown base class '" << base_class << "'." << endl;
+                parse_errors_ << "Error in class definition of '" << model_name << "': unknown base class '" << base_class << "'." << std::endl;
                 class_model = new ClassModel(model_name);
             }
         } else {
@@ -298,17 +296,17 @@ bool ObjectModelParser::parse(KnowledgeDatabase& knowledge_db) {
         }
 
         // parse properties
-        const TiXmlElement* prop = class_element->FirstChildElement();
+        const tinyxml2::XMLElement* prop = class_element->FirstChildElement();
         while(prop) {
-            string prop_name = prop->Value();
+            std::string prop_name = prop->Value();
             if (prop_name == "behavior_model") {
-                stringstream bh_errors;
+                std::stringstream bh_errors;
                 parseStateEstimator(class_model, prop, bh_errors);
                 if (bh_errors.str() != "") {
-                    parse_errors_ << "In class description for '" << class_model->getModelName() << "': " << bh_errors.str() << endl;
+                    parse_errors_ << "In class description for '" << class_model->getModelName() << "': " << bh_errors.str() << std::endl;
                 }
             } else {
-                parse_errors_ << "In class description for '" << class_model->getModelName() << "': Unknown class property: '" << prop_name << "'" << endl;
+                parse_errors_ << "In class description for '" << class_model->getModelName() << "': Unknown class property: '" << prop_name << "'" << std::endl;
             }
             prop = prop->NextSiblingElement();
         }
