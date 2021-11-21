@@ -187,7 +187,7 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const tinyxml
     }
 
     const tinyxml2::XMLElement* pclutter = elem->FirstChildElement("pclutter");
-    if (pnew) {
+    if (pclutter) {
         pbl::PDF* pdf_clutter = parsePDF(pclutter, error);
         if (pdf_clutter) {
             obj_model->setClutterPDF(attribute, *pdf_clutter);
