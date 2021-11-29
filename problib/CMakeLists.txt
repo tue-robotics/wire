@@ -7,8 +7,8 @@ project(problib)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   roscpp
-  armadillo_matrix
 )
+find_package(Armadillo REQUIRED)
 
 # Generate messages in the 'msg' folder
 add_message_files(
@@ -29,8 +29,8 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES problib
-  CATKIN_DEPENDS message_runtime armadillo_matrix
-#  DEPENDS system_lib
+  CATKIN_DEPENDS message_runtime
+  DEPENDS ARMADILLO
 )
 
 ###########
@@ -38,12 +38,12 @@ catkin_package(
 ###########
 
 include_directories(
+        ${ARMADILLO_INCLUDE_DIRS}
         ${catkin_INCLUDE_DIRS}
         include
 )
 
 ########## feature extraction ###########
-
 add_library(problib
         src/pdfs/PDF.cpp
         src/pdfs/Gaussian.cpp
@@ -61,7 +61,7 @@ add_library(problib
         include/${PROJECT_NAME}/pdfs/Mixture.h
         include/${PROJECT_NAME}/pdfs/Hybrid.h
         include/${PROJECT_NAME}/pdfs/PMF.h)
-target_link_libraries(problib ${catkin_LIBRARIES})
+target_link_libraries(problib armadillo ${catkin_LIBRARIES})
 add_dependencies(problib ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 
