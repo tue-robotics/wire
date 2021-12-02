@@ -37,7 +37,7 @@
 #ifndef PROBLIB_CONVERSIONS_H_
 #define PROBLIB_CONVERSIONS_H_
 
-#include "problib/PDF.h"
+#include <problib_msgs/PDF.h>
 
 #include "problib/pdfs/Gaussian.h"
 #include "problib/pdfs/Mixture.h"
@@ -55,21 +55,21 @@ namespace pbl {
  * @param pdf The PDF to be converter
  * @param msg Reference to the message that will be filled with the PDF information
  */
-void PDFtoMsg(const PDF& pdf, problib::PDF& msg);
+void PDFtoMsg(const PDF& pdf, problib_msgs::PDF& msg);
 
 /**
  * @brief Converts a PDF object to a ROS message
  * @param pdf The PDF to be converter
  * @return The PDF ROS Message
  */
-problib::PDF PDFtoMsg(const PDF& pdf);
+problib_msgs::PDF PDFtoMsg(const PDF& pdf);
 
 /**
  * @brief Converts a PDF ROS message to a PDF object
  * @param msg The PDF ROS message
  * @return Pointer to the PDF object if conversion was successful; 0 otherwise
  */
-PDF* msgToPDF(const problib::PDF& msg);
+PDF* msgToPDF(const problib_msgs::PDF& msg);
 
 /**
  * @brief Converts a PDF ROS message to a Gaussian object if the message represents a Gaussian
@@ -77,7 +77,7 @@ PDF* msgToPDF(const problib::PDF& msg);
  * @return Pointer to the PDF object if conversion was successful
  * (only if the message represents a Gaussian); 0 otherwise
  */
-Gaussian* msgToGaussian(const problib::PDF& msg);
+Gaussian* msgToGaussian(const problib_msgs::PDF& msg);
 
 /**
  * @brief Converts a PDF ROS message to a Mixture object if the message represents a Mixture
@@ -85,7 +85,7 @@ Gaussian* msgToGaussian(const problib::PDF& msg);
  * @return Pointer to the PDF object if conversion was successful
  * (only if the message represents a Mixture); 0 otherwise
  */
-Mixture* msgToMixture(const problib::PDF& msg);
+Mixture* msgToMixture(const problib_msgs::PDF& msg);
 
 /**
  * @brief Converts a PDF ROS message to a PMF object if the message represents a PMF
@@ -93,7 +93,7 @@ Mixture* msgToMixture(const problib::PDF& msg);
  * @return Pointer to the PDF object if conversion was successful
  * (only if the message represents a PMF); 0 otherwise
  */
-PMF* msgToPMF(const problib::PDF& msg);
+PMF* msgToPMF(const problib_msgs::PDF& msg);
 
 /**
  * @brief Casts a PDF object to a Gaussian if the PDF represents a Gaussian
@@ -130,31 +130,31 @@ std::string typeToName(PDF::PDFType type);
 
 /* * * * * * * SERIALIZATION AND DESERIALIZATION * * * * * * */
 
-void serialize(const PDF& gauss, problib::PDF& msg);
+void serialize(const PDF& gauss, problib_msgs::PDF& msg);
 
-PDF* deserialize(const problib::PDF& msg, int type, int& i_data);
+PDF* deserialize(const problib_msgs::PDF& msg, int type, int& i_data);
 
-void serialize_gaussian(const Gaussian& gauss, problib::PDF& msg);
+void serialize_gaussian(const Gaussian& gauss, problib_msgs::PDF& msg);
 
-Gaussian* deserialize_gaussian(const problib::PDF& msg, int& i_data);
+Gaussian* deserialize_gaussian(const problib_msgs::PDF& msg, int& i_data);
 
-void serialize_mixture(const Mixture& mix, problib::PDF& msg);
+void serialize_mixture(const Mixture& mix, problib_msgs::PDF& msg);
 
-Mixture* deserialize_mixture(const problib::PDF& msg, int& i_data);
+Mixture* deserialize_mixture(const problib_msgs::PDF& msg, int& i_data);
 
-void serialize_uniform(const Uniform& uniform, problib::PDF& msg);
+void serialize_uniform(const Uniform& uniform, problib_msgs::PDF& msg);
 
-Uniform* deserialize_uniform(const problib::PDF& msg, int& i_data);
+Uniform* deserialize_uniform(const problib_msgs::PDF& msg, int& i_data);
 
-void serialize_hybrid(const Hybrid& hybrid, problib::PDF& msg);
+void serialize_hybrid(const Hybrid& hybrid, problib_msgs::PDF& msg);
 
-Hybrid *deserialize_hybrid(const problib::PDF& msg, int& i_data);
+Hybrid *deserialize_hybrid(const problib_msgs::PDF& msg, int& i_data);
 
-void serialize_discrete(const PMF& pmf, problib::PDF& msg);
+void serialize_discrete(const PMF& pmf, problib_msgs::PDF& msg);
 
-PMF* deserialize_discrete(const problib::PDF& msg);
+PMF* deserialize_discrete(const problib_msgs::PDF& msg);
 
-PDF* deserialize_exact(const problib::PDF& msg);
+PDF* deserialize_exact(const problib_msgs::PDF& msg);
 
 }
 

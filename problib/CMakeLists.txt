@@ -5,20 +5,10 @@ project(problib)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  message_generation
+  problib_msgs
   roscpp
 )
 find_package(Armadillo REQUIRED)
-
-# Generate messages in the 'msg' folder
-add_message_files(
-    DIRECTORY msg
-    FILES DimensionDescription.msg PDFImpl.msg PDF.msg
-)
-
-generate_messages(
-  DEPENDENCIES
-)
 
 ## The catkin_package macro generates cmake config files for your package
 ## Declare things to be passed to dependent projects
@@ -29,7 +19,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES problib
-  CATKIN_DEPENDS message_runtime
+  CATKIN_DEPENDS problib_msgs
   DEPENDS ARMADILLO
 )
 
@@ -62,7 +52,7 @@ add_library(problib
         include/${PROJECT_NAME}/pdfs/Hybrid.h
         include/${PROJECT_NAME}/pdfs/PMF.h)
 target_link_libraries(problib armadillo ${catkin_LIBRARIES})
-add_dependencies(problib ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(problib ${catkin_EXPORTED_TARGETS})
 
 
 # add test executable

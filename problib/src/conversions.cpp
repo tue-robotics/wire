@@ -38,46 +38,46 @@
 
 namespace pbl {
 
-void PDFtoMsg(const PDF& pdf, problib::PDF& msg) {
+void PDFtoMsg(const PDF& pdf, problib_msgs::PDF& msg) {
 	msg.dimensions = pdf.dimensions();
 	serialize(pdf, msg);
 
 	if (pdf.type() == PDF::DISCRETE) {
-		msg.type = problib::PDF::DISCRETE;
+		msg.type = problib_msgs::PDF::DISCRETE;
 	} else {
 		msg.type = msg.data[0];
 	}
 }
 
-problib::PDF PDFtoMsg(const PDF& pdf) {
-    problib::PDF msg;
+problib_msgs::PDF PDFtoMsg(const PDF& pdf) {
+    problib_msgs::PDF msg;
     PDFtoMsg(pdf, msg);
     return msg;
 }
 
-PDF* msgToPDF(const problib::PDF& msg) {
+PDF* msgToPDF(const problib_msgs::PDF& msg) {
 	int i_data = 1;
 	return deserialize(msg, msg.type, i_data);
 }
 
-Gaussian* msgToGaussian(const problib::PDF& msg) {
+Gaussian* msgToGaussian(const problib_msgs::PDF& msg) {
 	int i_data = 1;
-	if (msg.type == problib::PDF::GAUSSIAN) {
+	if (msg.type == problib_msgs::PDF::GAUSSIAN) {
 		return deserialize_gaussian(msg, i_data);
 	}
 	return 0;
 }
 
-Mixture* msgToMixture(const problib::PDF& msg) {
+Mixture* msgToMixture(const problib_msgs::PDF& msg) {
 	int i_data = 1;
-	if (msg.type == problib::PDF::MIXTURE) {
+	if (msg.type == problib_msgs::PDF::MIXTURE) {
 		return deserialize_mixture(msg, i_data);
 	}
 	return 0;
 }
 
-PMF* msgToPMF(const problib::PDF& msg) {
-	if (msg.type == problib::PDF::DISCRETE) {
+PMF* msgToPMF(const problib_msgs::PDF& msg) {
+	if (msg.type == problib_msgs::PDF::DISCRETE) {
 		return deserialize_discrete(msg);
 	}
 	return 0;
@@ -137,7 +137,7 @@ std::string typeToName(PDF::PDFType type) {
 
 /* * * * * * * SERIALIZATION AND DESERIALIZATION * * * * * * */
 
-void serialize(const PDF& pdf, problib::PDF& msg) {
+void serialize(const PDF& pdf, problib_msgs::PDF& msg) {
 	if (pdf.type() == PDF::GAUSSIAN) {
 		const Gaussian* gauss = static_cast<const Gaussian*>(&pdf);
 		serialize_gaussian(*gauss, msg);
@@ -156,30 +156,30 @@ void serialize(const PDF& pdf, problib::PDF& msg) {
     }
 }
 
-PDF* deserialize(const problib::PDF& msg, int type, int& i_data) {
-	if (type == problib::PDF::MIXTURE) {
+PDF* deserialize(const problib_msgs::PDF& msg, int type, int& i_data) {
+	if (type == problib_msgs::PDF::MIXTURE) {
 		return deserialize_mixture(msg, i_data);
-	} else if (type == problib::PDF::GAUSSIAN) {
+	} else if (type == problib_msgs::PDF::GAUSSIAN) {
 		return deserialize_gaussian(msg, i_data);
-	} else if (type == problib::PDF::UNIFORM) {
+	} else if (type == problib_msgs::PDF::UNIFORM) {
 		return deserialize_uniform(msg, i_data);
-	} else if (type == problib::PDF::DISCRETE) {
+	} else if (type == problib_msgs::PDF::DISCRETE) {
 		return deserialize_discrete(msg);
-	} else if (type == problib::PDF::EXACT) {
+	} else if (type == problib_msgs::PDF::EXACT) {
 		return deserialize_exact(msg);
-    } else 	if (type == problib::PDF::HYBRID) {
+    } else 	if (type == problib_msgs::PDF::HYBRID) {
         return deserialize_hybrid(msg, i_data);
     }
 	return 0;
 }
 
-void serialize_gaussian(const Gaussian& gauss, problib::PDF& msg) {
+void serialize_gaussian(const Gaussian& gauss, problib_msgs::PDF& msg) {
 	int dimensions = gauss.dimensions();
 	int new_data_size = dimensions + ((dimensions + 1) * dimensions / 2) + 1;
 
 	msg.data.reserve(msg.data.size() + new_data_size);
 
-	msg.type = problib::PDF::GAUSSIAN;
+	msg.type = problib_msgs::PDF::GAUSSIAN;
 	msg.data.push_back(msg.type);
 
 	const arma::vec& mu = gauss.getMean();
@@ -195,7 +195,7 @@ void serialize_gaussian(const Gaussian& gauss, problib::PDF& msg) {
 	}
 }
 
-Gaussian* deserialize_gaussian(const problib::PDF& msg, int& i_data) {
+Gaussian* deserialize_gaussian(const problib_msgs::PDF& msg, int& i_data) {
 	arma::vec mu(msg.dimensions);
 	for(unsigned int i = 0; i < msg.dimensions; ++i) {
 		mu(i) = msg.data[i_data++];
@@ -213,9 +213,9 @@ Gaussian* deserialize_gaussian(const problib::PDF& msg, int& i_data) {
 	return new Gaussian(mu, cov);
 }
 
-void serialize_mixture(const Mixture& mix, problib::PDF& msg) {
+void serialize_mixture(const Mixture& mix, problib_msgs::PDF& msg) {
 	// add type of pdf (mixture)
-	msg.data.push_back(problib::PDF::MIXTURE);
+	msg.data.push_back(problib_msgs::PDF::MIXTURE);
 
 	// add number of mixture components
 	msg.data.push_back(mix.components());
@@ -228,7 +228,7 @@ void serialize_mixture(const Mixture& mix, problib::PDF& msg) {
 	}
 }
 
-Mixture* deserialize_mixture(const problib::PDF& msg, int& i_data) {
+Mixture* deserialize_mixture(const problib_msgs::PDF& msg, int& i_data) {
 	Mixture* mix = new Mixture();
 
 	int num_components = (int)msg.data[i_data++];
@@ -247,24 +247,24 @@ Mixture* deserialize_mixture(const problib::PDF& msg, int& i_data) {
 	return mix;
 }
 
-void serialize_uniform(const Uniform& uniform, problib::PDF& msg) {
-	msg.data.push_back(problib::PDF::UNIFORM);
+void serialize_uniform(const Uniform& uniform, problib_msgs::PDF& msg) {
+	msg.data.push_back(problib_msgs::PDF::UNIFORM);
 	msg.data.push_back(uniform.getMaxDensity());
 }
 
-Uniform* deserialize_uniform(const problib::PDF& msg, int& i_data) {
+Uniform* deserialize_uniform(const problib_msgs::PDF& msg, int& i_data) {
 	Uniform* uniform = new Uniform(msg.dimensions);
 	uniform->setDensity(msg.data[i_data++]);
 	return uniform;
 }
 
-void serialize_discrete(const PMF& pmf, problib::PDF& msg) {
+void serialize_discrete(const PMF& pmf, problib_msgs::PDF& msg) {
 	pmf.getValues(msg.values);
 	pmf.getProbabilities(msg.probabilities);
 	msg.domain_size = pmf.getDomainSize();
 }
 
-PMF* deserialize_discrete(const problib::PDF& msg) {
+PMF* deserialize_discrete(const problib_msgs::PDF& msg) {
 	PMF* pmf = new PMF(msg.domain_size);
 	std::vector<double>::const_iterator it_p = msg.probabilities.begin();
 	for(std::vector<std::string>::const_iterator it_v = msg.values.begin(); it_v != msg.values.end(); ++it_v) {
@@ -275,9 +275,9 @@ PMF* deserialize_discrete(const problib::PDF& msg) {
 	return pmf;
 }
 
-void serialize_hybrid(const Hybrid& hybrid, problib::PDF& msg) {
+void serialize_hybrid(const Hybrid& hybrid, problib_msgs::PDF& msg) {
     // add type of pdf (hybrid)
-    msg.data.push_back(problib::PDF::HYBRID);
+    msg.data.push_back(problib_msgs::PDF::HYBRID);
 
     // add number of hybrid components
     msg.data.push_back(hybrid.getPDFS().size());
@@ -290,14 +290,14 @@ void serialize_hybrid(const Hybrid& hybrid, problib::PDF& msg) {
         if (pdf.type() == PDF::DISCRETE) {
             bool already_contains_pmf = msg.domain_size != 0 || !msg.values.empty();
             assert_msg(!already_contains_pmf, "Can currently only decode at most one discrete pdf in hybrid pdf message.");
-            msg.data.push_back(problib::PDF::DISCRETE);
+            msg.data.push_back(problib_msgs::PDF::DISCRETE);
         }
 
         serialize(pdf, msg);
     }
 }
 
-Hybrid* deserialize_hybrid(const problib::PDF& msg, int& i_data) {
+Hybrid* deserialize_hybrid(const problib_msgs::PDF& msg, int& i_data) {
     Hybrid* hybrid = new Hybrid();
 
     int num_components = (int)msg.data[i_data++];
@@ -313,7 +313,7 @@ Hybrid* deserialize_hybrid(const problib::PDF& msg, int& i_data) {
     return hybrid;
 }
 
-PDF* deserialize_exact(const problib::PDF& msg) {
+PDF* deserialize_exact(const problib_msgs::PDF& msg) {
 	if (!msg.exact_value_vec.empty()) {
 		// vector value, so we ASSUME continuous
 		unsigned int dim = msg.exact_value_vec.size();
