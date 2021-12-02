@@ -3,8 +3,8 @@ project(wire_msgs)
 
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  problib_msgs
   std_msgs
-  problib
 )
 
 
@@ -20,10 +20,10 @@ add_message_files(
 
 generate_messages(
   DEPENDENCIES
+    problib_msgs
     std_msgs
-    problib
 )
 
 catkin_package(
-  CATKIN_DEPENDS problib std_msgs message_runtime
+  CATKIN_DEPENDS problib_msgs std_msgs message_runtime
 )
