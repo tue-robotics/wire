@@ -19,11 +19,11 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <!-- Wrapper around matrix library -->
-  <exec_depend>armadillo_matrix</exec_depend>
-
   <!-- Library for probabilistic data and computations -->
   <exec_depend>problib</exec_depend>
+  
+  <!-- Messages for probabilistic data -->
+  <exec_depend>problib_msgs</exec_depend>
 
   <!-- Wire core -->
   <exec_depend>wire_core</exec_depend>
