@@ -37,6 +37,7 @@
 #include "ros/ros.h"
 #include "problib/conversions.h"
 #include "problib/datatypes.h"
+#include "problib_msgs/PDF.h"
 
 #include <iostream>
 #include <armadillo>
@@ -108,7 +109,7 @@ void test() {
     pmf1.setProbability("test", 0.8);
     H.addPDF(pmf1, 1);
 
-    problib::PDF H_msg;
+    problib_msgs::PDF H_msg;
     pbl::PDFtoMsg(H, H_msg);
 
     cout << H_msg << endl;
@@ -150,7 +151,7 @@ void test() {
 	cout << "Density of mixture at " << mean2 << " = " << d << endl << endl;
 
 	cout << "Converting to msg ..." << endl << endl;
-	problib::PDF pdf_msg;
+	problib_msgs::PDF pdf_msg;
 	pbl::PDFtoMsg(mix2, pdf_msg);
 	cout << "Result:" << endl << pdf_msg << endl;
 
@@ -199,7 +200,7 @@ void test() {
 	cout << pmf.toString() << endl;
 
 	cout << "Converting to msg ..." << endl << endl;
-	problib::PDF pmf_msg;
+	problib_msgs::PDF pmf_msg;
 	pbl::PDFtoMsg(pmf, pmf_msg);
 	cout << "Result:" << endl << pmf_msg << endl;
 
@@ -210,14 +211,14 @@ void test() {
 	delete received_pdf2;
 
 	cout << "Testing simple population of msg for exact (string) value ..." << endl;
-	problib::PDF exact_str;
+	problib_msgs::PDF exact_str;
 	exact_str.exact_value_str = "test";
 	PDF* pdf_exact_str = pbl::msgToPDF(exact_str);
 	cout << "exact_str:" << endl << pdf_exact_str->toString("    ") << endl << endl;
 	delete pdf_exact_str;
 
 	cout << "Testing simple population of msg for exact (real) value ..." << endl;
-	problib::PDF exact_real;
+	problib_msgs::PDF exact_real;
 	exact_real.exact_value_vec.push_back(1);
 	exact_real.exact_value_vec.push_back(1);
 	exact_real.exact_value_vec.push_back(1);

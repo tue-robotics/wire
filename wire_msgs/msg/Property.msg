@@ -1,2 +1,2 @@
 string attribute
-problib/PDF pdf
+problib_msgs/PDF pdf
