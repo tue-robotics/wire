@@ -86,6 +86,7 @@ void Hybrid::cloneStruct() {
 
 double Hybrid::getLikelihood(const PDF& pdf) const {
     assert_msg(false, "Likelihood method not implemented. Please create a subclass of Hybrid and implement your own method.");
+    return 0.; // Never reached because of assertion of false
 }
 
 void Hybrid::clear() {
