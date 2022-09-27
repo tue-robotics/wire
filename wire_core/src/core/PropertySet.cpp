@@ -103,7 +103,7 @@ void PropertySet::propagate(const Time& time) {
     timestamp_ = time;
 }
 
-void PropertySet::update(const pbl::PDF& z, const Time& time) {
+void PropertySet::update(const pbl::PDF& /*z*/, const Time& /*time*/) {
     assert(false);
 }
 

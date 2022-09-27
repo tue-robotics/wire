@@ -301,7 +301,7 @@ void WorldModelROS::processEvidence(const wire_msgs::WorldEvidence& world_eviden
     }
 }
 
-bool WorldModelROS::resetWorldModel(std_srvs::Empty::Request& req, std_srvs::Empty::Response& res) {
+bool WorldModelROS::resetWorldModel(std_srvs::Empty::Request& /*req*/, std_srvs::Empty::Response& /*res*/) {
     delete world_model_;
     world_model_ = new HypothesisTree(max_num_hyps_, min_prob_ratio_);
     return true;
