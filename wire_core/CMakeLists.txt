@@ -32,7 +32,12 @@ catkin_package(
     TinyXML2
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
+include_directories(
+  include
+  SYSTEM
+  ${catkin_INCLUDE_DIRS}
+  ${TinyXML2_INCLUDE_DIRS}
+)
 
 ## Build
 add_compile_options(-Wreturn-type) # Return type checking
