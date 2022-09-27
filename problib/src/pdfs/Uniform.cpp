@@ -156,7 +156,7 @@ std::string Uniform::toString(const std::string& /*indent*/) const {
     s << "U(" << uniform_probability_;
 
     if (size_is_set_) {
-        s << ", mean = " << mean_ << ", size = " << size_;
+        s << ", mean =\n" << mean_ << ", size =\n" << size_;
     }
 
     s << ")";

@@ -292,7 +292,7 @@ double PMF::getMaxDensity() const {
 
 std::string PMF::toString(const std::string& /*indent*/) const {
 	std::stringstream ss;
-	ss << indent << "PMF(" << ptr_->domain_size_ << ")[";
+	ss << "PMF(" << ptr_->domain_size_ << ")[";
 
 	std::map<std::string, double>::const_iterator it = ptr_->pmf_.begin();
 	if (it != ptr_->pmf_.end()) {
