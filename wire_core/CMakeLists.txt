@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(wire_core)
 
+add_compile_options(-Wall -Werror=all)
+add_compile_options(-Wextra -Werror=extra)
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -40,10 +43,6 @@ include_directories(
 )
 
 ## Build
-add_compile_options(-Wreturn-type) # Return type checking
-add_compile_options(-Wreorder)
-
-
 add_library(wire
     src/WorldModelROS.cpp
     src/models/FixedState.cpp
@@ -79,7 +78,6 @@ add_library(wire
     include/wire/logic/AssignmentMatrix.h
     include/wire/logic/Hypothesis.h
     include/wire/logic/HypothesesTree.h
-    
 )
 
 target_link_libraries(wire ${catkin_LIBRARIES} ${TinyXML2_LIBRARIES})
