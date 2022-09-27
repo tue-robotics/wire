@@ -57,10 +57,10 @@ PDF::PDFType PDF::type() const {
 	return type_;
 }
 
-bool PDF::getExpectedValue(std::string& v) const {
+bool PDF::getExpectedValue(std::string& /*v*/) const {
 	return false;
 }
 
-bool PDF::getExpectedValue(arma::vec& v) const {
+bool PDF::getExpectedValue(arma::vec& /*v*/) const {
 	return false;
 }

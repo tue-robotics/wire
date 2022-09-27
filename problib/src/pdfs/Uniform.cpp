@@ -125,7 +125,7 @@ void Uniform::setDensity(const double& density) {
     size_is_set_ = false;
 }
 
-double Uniform::getDensity(const arma::vec& vec) const {
+double Uniform::getDensity(const arma::vec& /*vec*/) const {
 	return uniform_probability_;
 }
 
@@ -151,7 +151,7 @@ void Uniform::calculateUniformDensity() {
     size_is_set_ = true;
 }
 
-std::string Uniform::toString(const std::string& indent) const {
+std::string Uniform::toString(const std::string& /*indent*/) const {
 	std::stringstream s;
     s << "U(" << uniform_probability_;
 

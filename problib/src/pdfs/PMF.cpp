@@ -280,7 +280,7 @@ void PMF::normalize() {
 	ptr_->total_prob_ = 1;
 }
 
-double PMF::getDensity(const arma::vec& v) const {
+double PMF::getDensity(const arma::vec& /*v*/) const {
 	assert_msg(false, "Cannot get density of a PMF");
 	return 0;
 }
@@ -290,7 +290,7 @@ double PMF::getMaxDensity() const {
 	return 0;
 }
 
-std::string PMF::toString(const std::string& indent) const {
+std::string PMF::toString(const std::string& /*indent*/) const {
 	std::stringstream ss;
 	ss << indent << "PMF(" << ptr_->domain_size_ << ")[";
 

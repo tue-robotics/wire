@@ -108,7 +108,7 @@ double Gaussian::getDensity(const arma::vec& v, double max_mah_dist) const {
 	return getDensity(v, ptr_->mu_, ptr_->cov_, max_mah_dist);
 }
 
-double Gaussian::getDensity(const Gaussian& G, double max_mah_dist) const {
+double Gaussian::getDensity(const Gaussian& G, double /*max_mah_dist*/) const {
 	CHECK_INITIALIZED
 	arma::mat S = G.getCovariance() + ptr_->cov_;
 	return getDensity(ptr_->mu_, G.getMean(), S);
@@ -188,7 +188,7 @@ const arma::mat& Gaussian::getCovariance() const {
 	return ptr_->cov_;
 }
 
-std::string Gaussian::toString(const std::string& indent) const {
+std::string Gaussian::toString(const std::string& /*indent*/) const {
 	if (!ptr_) {
 		return "N(-)";
 	}
