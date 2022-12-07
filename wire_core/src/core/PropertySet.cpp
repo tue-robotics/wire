@@ -115,6 +115,7 @@ void PropertySet::reset() {
 
 const pbl::PDF& PropertySet::getValue() const {
     assert(false);
+    return pbl::PDF(0, pbl::PDF::UNKNOWN);
 }
 
 double PropertySet::getLikelihood(const PropertySet& P) const {
