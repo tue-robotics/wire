@@ -126,34 +126,112 @@ const PMF* PDFtoPMF(const PDF& pdf);
 
 /* * * * * * * OTHER * * * * * * */
 
+/**
+ * @brief Get the type of PDF as string
+ * @param type PDFType as enum
+ * @return String of the PDFType
+ */
 std::string typeToName(PDF::PDFType type);
 
 /* * * * * * * SERIALIZATION AND DESERIALIZATION * * * * * * */
 
-void serialize(const PDF& gauss, problib_msgs::PDF& msg);
+/**
+ * @brief Serialize a PDF object to a PDF message
+ * @param pdf[in] The PDF object
+ * @param msg[out] The filled PDF message
+ */
+void serialize(const PDF& pdf, problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize a PDF message to a PDF object
+ * @param msg The PDF message
+ * @param type The type of the PDF
+ * @param i_data The positon of the data to be read
+ * @return The filled PDF object
+ */
 PDF* deserialize(const problib_msgs::PDF& msg, int type, int& i_data);
 
+/**
+ * @brief Serialize a Gaussian PDF object to a PDF message
+ * @param gauss[in] The Gaussian PDF object
+ * @param msg[out] The filled PDF message
+ */
 void serialize_gaussian(const Gaussian& gauss, problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize a Gaussian PDF message to a Gaussian PDF object
+ * @param msg The Gaussian PDF message
+ * @param i_data The positon of the data to be read
+ * @return The filled Gaussian PDF object
+ */
 Gaussian* deserialize_gaussian(const problib_msgs::PDF& msg, int& i_data);
 
+/**
+ * @brief Serialize a Mixture PDF object to a PDF message
+ * @param mix[in] The Mixture PDF object
+ * @param msg[out] The filled PDF message
+ */
 void serialize_mixture(const Mixture& mix, problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize a Mixture PDF message to a Mixture PDF object
+ * @param msg The Mixture PDF message
+ * @param i_data The positon of the data to be read
+ * @return The filled Mixture PDF object
+ */
 Mixture* deserialize_mixture(const problib_msgs::PDF& msg, int& i_data);
 
+/**
+ * @brief Serialize an Uniform PDF object to a PDF message
+ * @param uniform[in] The Uniform PDF object
+ * @param msg[out] The filled PDF message
+ */
 void serialize_uniform(const Uniform& uniform, problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize an Uniform PDF message to an Uniform PDF object
+ * @param msg The Uniform PDF message
+ * @param i_data The positon of the data to be read
+ * @return The filled Uniform PDF object
+ */
 Uniform* deserialize_uniform(const problib_msgs::PDF& msg, int& i_data);
 
+/**
+ * @brief Serialize a Hybrid PDF object to a PDF message
+ * @param hybrid[in] The Hybrid PDF object
+ * @param msg[out] The filled PDF message
+ */
 void serialize_hybrid(const Hybrid& hybrid, problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize a Hybrid PDF message to a Hybrid PDF object
+ * @param msg The Hybrid PDF message
+ * @param i_data The positon of the data to be read
+ * @return The filled Hybrid PDF object
+ */
 Hybrid *deserialize_hybrid(const problib_msgs::PDF& msg, int& i_data);
 
+/**
+ * @brief Serialize a PMF object to a PDF message
+ * @param pmf[in] The PMF object
+ * @param msg[out] The filled PDF message
+ */
 void serialize_discrete(const PMF& pmf, problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize a Discrete PDF message to a PMF object
+ * @param msg The Discrete PDF message
+ * @param i_data The positon of the data to be read
+ * @return The filled PMF object
+ */
 PMF* deserialize_discrete(const problib_msgs::PDF& msg);
 
+/**
+ * @brief Deserialize an Exact PDF message to an Exact PDF object
+ * @param msg The Exact PDF message
+ * @param i_data The positon of the data to be read
+ * @return The filled PDF object
+ */
 PDF* deserialize_exact(const problib_msgs::PDF& msg);
 
 }
