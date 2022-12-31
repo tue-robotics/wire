@@ -10,7 +10,6 @@
 #include "wire/core/Property.h"
 #include "wire/models/FixedState.h"
 
-using namespace std;
 
 namespace mhf {
 
@@ -48,7 +47,7 @@ void PropertySet::addProperty(const Attribute& attribute, const pbl::PDF& value)
     }
 }
 
-void PropertySet::addProperty(const string& att, const pbl::PDF& value) {
+void PropertySet::addProperty(const std::string& att, const pbl::PDF& value) {
     addProperty(AttributeConv::attribute(att), value);
 }
 
