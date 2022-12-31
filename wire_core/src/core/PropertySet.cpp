@@ -20,7 +20,7 @@ PropertySet::PropertySet(Time timestamp) : timestamp_(timestamp) {
 }
 
 PropertySet::~PropertySet() {
-    for(map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
+    for (map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
         delete it->second;
     }
 
@@ -28,7 +28,7 @@ PropertySet::~PropertySet() {
 }
 
 PropertySet::PropertySet(const PropertySet& orig) : timestamp_(orig.timestamp_)  {
-    for(map<Attribute, Property*>::const_iterator it = orig.properties_.begin(); it != orig.properties_.end(); ++it) {
+    for (std::map<Attribute, Property*>::const_iterator it = orig.properties_.begin(); it != orig.properties_.end(); ++it) {
         properties_[it->first] = it->second->clone();
     }
 }
@@ -38,7 +38,7 @@ PropertySet* PropertySet::clone() const {
 }
 
 void PropertySet::addProperty(const Attribute& attribute, const pbl::PDF& value) {
-    map<Attribute, Property*>::iterator it = properties_.find(attribute);
+    std::map<Attribute, Property*>::iterator it = properties_.find(attribute);
     if (it == properties_.end()) {
         properties_[attribute] = new Property(attribute, FixedState(value));
     } else {
@@ -52,7 +52,7 @@ void PropertySet::addProperty(const std::string& att, const pbl::PDF& value) {
 }
 
 void PropertySet::addProperty(const Attribute& attribute, const IStateEstimator& estimator) {
-    map<Attribute, Property*>::iterator it = properties_.find(attribute);
+    std::map<Attribute, Property*>::iterator it = properties_.find(attribute);
     if (it == properties_.end()) {
         properties_[attribute] = new Property(attribute, estimator);
     } else {
@@ -62,7 +62,7 @@ void PropertySet::addProperty(const Attribute& attribute, const IStateEstimator&
 }
 
 void PropertySet::addProperty(Property* property) {
-    map<Attribute, Property*>::iterator it = properties_.find(property->getAttribute());
+    std::map<Attribute, Property*>::iterator it = properties_.find(property->getAttribute());
     if (it == properties_.end()) {
         properties_[property->getAttribute()] = property;
     } else {
@@ -72,7 +72,7 @@ void PropertySet::addProperty(Property* property) {
 }
 
 const Property* PropertySet::getProperty(const Attribute& attribute) const {
-    map<Attribute, Property*>::const_iterator it = properties_.find(attribute);
+    std::map<Attribute, Property*>::const_iterator it = properties_.find(attribute);
     if (it != properties_.end()) {
         return it->second;
     }
@@ -80,7 +80,7 @@ const Property* PropertySet::getProperty(const Attribute& attribute) const {
 }
 
 Property* PropertySet::getProperty(const Attribute& attribute) {
-    map<Attribute, Property*>::iterator it = properties_.find(attribute);
+    std::map<Attribute, Property*>::iterator it = properties_.find(attribute);
     if (it != properties_.end()) {
         return it->second;
     }
@@ -96,7 +96,7 @@ void PropertySet::propagate(const Time& time) {
         return;
     }
 
-    for(map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
+    for (std::map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
         it->second->propagate(time);
     }
 
@@ -108,7 +108,7 @@ void PropertySet::update(const pbl::PDF& z, const Time& time) {
 }
 
 void PropertySet::reset() {
-    for(map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
+    for(std::map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
         it->second->reset();
     }
 }
@@ -120,9 +120,9 @@ const pbl::PDF& PropertySet::getValue() const {
 double PropertySet::getLikelihood(const PropertySet& P) const {
     double likelihood = 1;
 
-    const map<Attribute, Property*>& other_props = P.properties_;
+    const std::map<Attribute, Property*>& other_props = P.properties_;
 
-    for(map<Attribute, Property*>::const_iterator it = other_props.begin(); it != other_props.end(); ++it) {
+    for (std::map<Attribute, Property*>::const_iterator it = other_props.begin(); it != other_props.end(); ++it) {
 
         const Attribute& attribute = it->first;
         const Property* other_prop = it->second;
@@ -143,12 +143,12 @@ double PropertySet::getLikelihood(const PropertySet& P) const {
             printf("Error during likelihood calculation: property '%s' is not in property set.\n", AttributeConv::attribute_str(attribute).c_str());
 
             printf("This (%p) constains:\n", this);
-            for(map<Attribute, Property*>::const_iterator it = properties_.begin(); it != properties_.end(); ++it) {
+            for (std::map<Attribute, Property*>::const_iterator it = properties_.begin(); it != properties_.end(); ++it) {
                 printf(" - %s\n", AttributeConv::attribute_str(it->first).c_str());
             }
 
             printf("Other (%p) constains:\n", &P);
-            for(map<Attribute, Property*>::const_iterator it = other_props.begin(); it != other_props.end(); ++it) {
+            for (std::map<Attribute, Property*>::const_iterator it = other_props.begin(); it != other_props.end(); ++it) {
                 printf(" - %s\n", AttributeConv::attribute_str(it->first).c_str());
             }
         }
@@ -166,9 +166,9 @@ Time PropertySet::getTimestamp() const {
     return timestamp_;
 }
 
-string PropertySet::toString() const {
-    stringstream s;
-    for(map<Attribute, Property*>::const_iterator it = properties_.begin(); it != properties_.end(); ++it) {
+std::string PropertySet::toString() const {
+    std::stringstream s;
+    for (std::map<Attribute, Property*>::const_iterator it = properties_.begin(); it != properties_.end(); ++it) {
         s << " - " << AttributeConv::attribute_str(it->first) << endl;
     }
     return s.str();
