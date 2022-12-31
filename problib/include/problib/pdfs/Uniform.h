@@ -57,8 +57,7 @@ public:
      * size and density.
      * @param dim The dimensionality of the uniform distribution
      */
-	Uniform(int dim);
-
+    Uniform(int dim);
 
     /**
      * @brief Constructs a uniform distribution with known dimensionality and density,
@@ -66,7 +65,7 @@ public:
      * @param dim The dimensionality of the uniform distribution
      * @param density The density of the uniform distribution
      */
-	Uniform(int dim, double density);
+    Uniform(int dim, double density);
 
     /**
      * @brief Constructs a uniform distribution with given mean value and size. The density
@@ -80,43 +79,43 @@ public:
     /**
      * @brief Copy constructor
      */
-	Uniform(const Uniform& pdf);
+    Uniform(const Uniform& pdf);
 
     /**
      * @brief Destructor
      */
-	virtual ~Uniform();
+    virtual ~Uniform();
 
     /**
      * @brief Assignment operator. The operation is cheap since it only
      * copies a pointer. A deep clone will only be created if the original
      * object is modified.
      */
-	Uniform& operator=(const Uniform& other);
+    Uniform& operator=(const Uniform& other);
 
     /**
      * @brief Creates a clone of the object. The clone method is cheap since it only
      * copies a pointer. A deep clone will only be created if the original
      * object is modified.
      */
-	Uniform* clone() const;
+    Uniform* clone() const;
 
-	double getLikelihood(const PDF& pdf) const;
+    double getLikelihood(const PDF& pdf) const;
 
     /**
      * @brief Sets the density of the uniform distribution
      * @note Only makes sense if the size of the volume is not set
      * @param density The uniform density of the distribution
      */
-	void setDensity(const double& density);
+    void setDensity(const double& density);
 
     /**
      * @brief Calculates the density of the distribution at point v. Will always return
      * the same density if v is inside the volume, and 0 otherwise.
-     * @param v The point to calculate the density for
+     * @param vec The point to calculate the density for
      * @return The density of the distribution at point v
      */
-	double getDensity(const arma::vec& vec) const;
+    double getDensity(const arma::vec& vec) const;
 
     /**
      * @brief Returns the maximum density of this distribution, which always equals 1 / volume
@@ -141,7 +140,7 @@ public:
      * @note Should be changed into stream operator <<
      * @return The Gaussian as string
      */
-	std::string toString(const std::string& indent = "") const;
+     std::string toString(const std::string& indent = "") const;
 
 protected:
 
