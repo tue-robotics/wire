@@ -104,14 +104,14 @@ const Gaussian* PDFtoGaussian(const PDF& pdf);
 
 /**
  * @brief Casts a PDF object to a Mixture if the PDF represents a Mixture
- * @param msg The PDF object
+ * @param pdf The PDF object
  * @return Pointer to the PDF object if casting was successful; 0 otherwise
  */
 const Mixture* PDFtoMixture(const PDF& pdf);
 
 /**
  * @brief Casts a PDF object to a Uniform distribution if the PDF represents a Uniform distribution
- * @param msg The PDF object
+ * @param pdf The PDF object
  * @return Pointer to the PDF object if casting was successful; 0 otherwise
  */
 const Uniform* PDFtoUniform(const PDF& pdf);
@@ -119,7 +119,7 @@ const Uniform* PDFtoUniform(const PDF& pdf);
 
 /**
  * @brief Casts a PDF object to a PMF if the PDF represents a PMF
- * @param msg The PDF object
+ * @param pdf The PDF object
  * @return Pointer to the PDF object if casting was successful; 0 otherwise
  */
 const PMF* PDFtoPMF(const PDF& pdf);
