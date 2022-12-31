@@ -20,7 +20,7 @@ PropertySet::PropertySet(Time timestamp) : timestamp_(timestamp) {
 }
 
 PropertySet::~PropertySet() {
-    for (map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
+    for (std::map<Attribute, Property*>::iterator it = properties_.begin(); it != properties_.end(); ++it) {
         delete it->second;
     }
 
@@ -169,7 +169,7 @@ Time PropertySet::getTimestamp() const {
 std::string PropertySet::toString() const {
     std::stringstream s;
     for (std::map<Attribute, Property*>::const_iterator it = properties_.begin(); it != properties_.end(); ++it) {
-        s << " - " << AttributeConv::attribute_str(it->first) << endl;
+        s << " - " << AttributeConv::attribute_str(it->first) << std::endl;
     }
     return s.str();
 }
