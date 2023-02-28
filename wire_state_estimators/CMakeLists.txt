@@ -21,7 +21,11 @@ catkin_package(
     pluginlib
 )
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(
+  include
+  SYSTEM
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Build
 
