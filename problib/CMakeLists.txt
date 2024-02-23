@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(problib)
 
+add_compile_options(-Wall -Werror=all)
+add_compile_options(-Wextra -Werror=extra)
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -28,9 +31,10 @@ catkin_package(
 ###########
 
 include_directories(
-        ${ARMADILLO_INCLUDE_DIRS}
-        ${catkin_INCLUDE_DIRS}
-        include
+    include
+    SYSTEM
+    ${catkin_INCLUDE_DIRS}
+    ${ARMADILLO_INCLUDE_DIRS}
 )
 
 ########## feature extraction ###########

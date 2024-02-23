@@ -170,7 +170,7 @@ std::string Mixture::toString(const std::string& indent) const {
 	ss << "MIX{\n";
 	std::vector<double>::const_iterator it_w = ptr_->weights_.begin();
 	for (std::vector<PDF*>::const_iterator it_pdf = ptr_->components_.begin(); it_pdf != ptr_->components_.end(); ++it_pdf) {
-		ss << new_indent << (*it_w) << " : " << (*it_pdf)->toString(new_indent) << "\n";
+		ss << new_indent << (*it_w) << ": " << (*it_pdf)->toString(new_indent) << "\n";
 		++it_w;
 	}
 	ss << indent << "}";

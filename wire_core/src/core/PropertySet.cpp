@@ -103,7 +103,7 @@ void PropertySet::propagate(const Time& time) {
     timestamp_ = time;
 }
 
-void PropertySet::update(const pbl::PDF& z, const Time& time) {
+void PropertySet::update(const pbl::PDF& /*z*/, const Time& /*time*/) {
     assert(false);
 }
 
@@ -115,6 +115,7 @@ void PropertySet::reset() {
 
 const pbl::PDF& PropertySet::getValue() const {
     assert(false);
+    return pbl::PDF(0, pbl::PDF::UNKNOWN);
 }
 
 double PropertySet::getLikelihood(const PropertySet& P) const {

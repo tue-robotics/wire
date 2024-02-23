@@ -52,13 +52,13 @@ list<timespec> TIMERS;
 stringstream TIMER_LOG;
 stringstream OUTPUT_LOG;
 
-inline void startTimer(int ID = 0) {
+inline void startTimer(int /*ID*/=0) {
 	timespec t_start;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &t_start);
 	TIMERS.push_back(t_start);
 }
 
-inline void stopTimer(string msg, int ID = 0, double factor = 1) {
+inline void stopTimer(string msg, int /*ID*/=0, double factor=1) {
 	timespec t_end;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &t_end);
 
@@ -148,7 +148,7 @@ void test() {
 	for (int i = 0; i < 1000; ++i) {
 		d = mix2.getLikelihood(exact2);
 	}
-	cout << "Density of mixture at " << mean2 << " = " << d << endl << endl;
+	cout << "Density of mixture at:\n" << mean2 << " = " << d << endl << endl;
 
 	cout << "Converting to msg ..." << endl << endl;
 	problib_msgs::PDF pdf_msg;
@@ -159,7 +159,7 @@ void test() {
 	PDF* received_pdf = pbl::msgToPDF(pdf_msg);
 	cout << "Result:" << endl << received_pdf->toString() << endl << endl;
 
-	cout << "Density of mixture at " << mean2 << " = " << received_pdf->getLikelihood(exact2) << endl << endl;
+	cout << "Density of mixture at:\n" << mean2 << " = " << received_pdf->getLikelihood(exact2) << endl << endl;
 
 	delete received_pdf;
 
@@ -253,7 +253,7 @@ void test() {
 	delete pdf_exact_real;
 }
 
-int main(int argc, char **argv) {
+int main() {
 
 	startTimer();
 	test();
