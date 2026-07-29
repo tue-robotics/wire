@@ -84,7 +84,7 @@ void Hybrid::cloneStruct() {
 	}
 }
 
-double Hybrid::getLikelihood(const PDF& pdf) const {
+double Hybrid::getLikelihood(const PDF& /*pdf*/) const {
     assert_msg(false, "Likelihood method not implemented. Please create a subclass of Hybrid and implement your own method.");
     return 0.; // Never reached because of assertion of false
 }
@@ -104,7 +104,7 @@ double Hybrid::getMaxDensity() const {
 	return 0;
 }
 
-void Hybrid::addPDF(const PDF& pdf, double priority) {
+void Hybrid::addPDF(const PDF& pdf, double /*priority*/) {
 	if (dimensions_ < 0) {
 		dimensions_ = pdf.dimensions();
 	} else {

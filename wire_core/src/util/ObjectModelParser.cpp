@@ -104,7 +104,7 @@ bool ObjectModelParser::parseStateEstimator(ClassModel* obj_model, const tinyxml
     // check behavior model's attribute and model type
     std::string attribute_name, model_type;
     if (!getAttributeValue(elem, "attribute", attribute_name, error)
-            | !getAttributeValue(elem, "model", model_type, error)) {
+            || !getAttributeValue(elem, "model", model_type, error)) {
         return false;
     }
 
